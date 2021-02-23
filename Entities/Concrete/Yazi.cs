@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Entities.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Entities.Concrete
 {
-    public class Yazi
+    public class Yazi : ITablo
     {
         public int Id { get; set; }
         public string Location { get; set; }
