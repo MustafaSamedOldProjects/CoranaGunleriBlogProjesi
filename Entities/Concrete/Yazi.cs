@@ -12,6 +12,6 @@ namespace Entities.Concrete
         public byte[] GorunurResmi { get; set; }
         public string BeklemeDurumu { get; set; }
         public DateTime YazıldıgıTarih { get; set; }
-        public AppUser YazanKisi { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }
