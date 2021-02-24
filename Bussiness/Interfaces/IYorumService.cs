@@ -8,6 +8,6 @@ namespace Bussiness.Interfaces
 {
     public interface IYorumService : IGenericService<Yorum>
     {
-        Task<ICollection<Yorum>> GetirYorumsByYaziId(); 
+        Task<ICollection<Yorum>> GetirYorumsByYaziId(int id); 
     }
 }
