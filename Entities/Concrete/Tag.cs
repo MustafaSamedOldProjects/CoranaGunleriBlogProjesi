@@ -14,5 +14,6 @@ namespace Entities.Concrete
         public int? ParentTagId { get; set; }
         public ICollection<Tag> SubTags { get; set; }
         public AppUser AppUser { get; set; }
+        public int AppUserId { get; set; }
     }
 }

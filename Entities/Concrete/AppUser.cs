@@ -9,5 +9,6 @@ namespace Entities.Concrete
     {
         public ICollection<Yazi> Yazis { get; set; }
         public ICollection<Tag> Tags { get; set; }
+        public ICollection<Yorum> Yorums { get; set; }
     }
 }
