@@ -9,10 +9,10 @@ namespace Data.Interfaces
     public interface IGenericDal<T> where T : class, ITablo, new()
     {
         Task Add(T item);
-        Task<T> Update(T item);
+        Task Update(T item);
         Task Delete(T item);
         Task<T> GetById(int id);
         Task<List<T>> GetAll();
-        Task<int> GetLastId(T item);
+        Task<T> GetLastId(T item);
     }
 }

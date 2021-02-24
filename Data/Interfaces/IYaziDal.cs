@@ -12,5 +12,6 @@ namespace Data.Interfaces
         Task<List<Yazi>> GetBekleyenYazilar();// Validator'a düşecek.
         Task<List<Yazi>> GetSilinenYazilar(); //Admin(ler) Görebilecek.
         Task<List<AppUser>> GetYaziSahipUsers();
+        Task<List<Yazi>> GetYazi();
     }
 }
