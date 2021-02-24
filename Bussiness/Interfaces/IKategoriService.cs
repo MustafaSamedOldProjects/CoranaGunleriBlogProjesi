@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities.Concrete;
 
-namespace Data.Interfaces
+namespace Bussiness.Interfaces
 {
     public interface IKategoriService :IGenericService<Kategori>
     {

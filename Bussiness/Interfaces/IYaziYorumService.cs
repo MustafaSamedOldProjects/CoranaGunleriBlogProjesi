@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data.Interfaces
+namespace Bussiness.Interfaces
 {
     public interface IYaziYorumService : IGenericService<YaziYorum>
     {
