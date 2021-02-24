@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Data.Interfaces
 {
-    public interface IYaziTag : IGenericDal<YaziTag>
+    public interface IYaziYorumDal : IGenericDal<YaziYorum>
     {
     }
 }
