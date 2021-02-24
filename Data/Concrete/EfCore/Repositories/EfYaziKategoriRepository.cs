@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data.Concrete.EfCore.Repositories
 {
-    class EfYaziKategoriRepository
+    public class EfYaziKategoriRepository
     {
     }
 }
