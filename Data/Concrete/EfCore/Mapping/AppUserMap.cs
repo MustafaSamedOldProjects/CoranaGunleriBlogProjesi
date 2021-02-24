@@ -11,7 +11,9 @@ namespace Data.Concrete.EfCore.Mapping
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-            throw new NotImplementedException();
+            builder.HasMany(i => i.Yazis).WithOne(i => i.AppUser).HasForeignKey(i => i.Id);
+            builder.HasMany(i => i.Tags).WithOne(i => i.AppUser).HasForeignKey(i => i.Id);
+            builder.HasMany(i => i.Yorums).WithOne(i => i.AppUser).HasForeignKey(i => i.Id);
         }
     }
 }
