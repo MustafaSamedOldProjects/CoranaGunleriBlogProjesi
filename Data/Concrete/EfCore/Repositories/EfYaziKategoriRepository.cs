@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Data.Interfaces;
+using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Data.Concrete.EfCore.Repositories
 {
-    public class EfYaziKategoriRepository
+    public class EfYaziKategoriRepository :EfGenericRepository<YaziKategori>, IYaziKategoriDal
     {
     }
 }

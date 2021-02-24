@@ -38,17 +38,17 @@ namespace Data.Concrete.EfCore.Repositories
             return await context.Set<T>().FindAsync(id);
         }
 
-        public async Task<int> GetLastId(T item)
+        public async  Task<T> GetLastId(T item)
         {
             using BlogContext context = new BlogContext();
-            return await context.Set<T>().OrderByDescending(i=> item.);
-
+            return  await context.Set<T>().OrderBy(x => x.GetType().GetProperty("Id").GetValue(x, null)).FirstOrDefaultAsync(); ;
         }
 
-        public async Task<T> Update(T item)
+        public async Task Update(T item)
         {
             using BlogContext context = new BlogContext();
-
+            var a = context.Update(item);
+            await context.SaveChangesAsync();
         }
     }
 }
