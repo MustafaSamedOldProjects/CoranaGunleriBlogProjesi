@@ -14,5 +14,7 @@ namespace Entities.Concrete
         public DateTime YazıldıgıTarih { get; set; }
         public AppUser AppUser { get; set; }
         public ICollection<YaziKategori> YaziKategoris { get; set; }
+        public ICollection<YaziTag> YaziTags{ get; set; }
+        public ICollection<YaziYorum> YaziYorums{ get; set; }
     }
 }

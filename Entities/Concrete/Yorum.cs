@@ -12,5 +12,6 @@ namespace Entities.Concrete
         public string BeklemeDurumu { get; set; }
         public DateTime YazildigiTarih { get; set; }
         public AppUser appUser { get; set; }
+        public ICollection<YaziYorum> YaziYorums { get; set; }
     }
 }
