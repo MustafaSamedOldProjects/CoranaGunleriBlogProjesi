@@ -13,5 +13,6 @@ namespace Data.Interfaces
         Task Delete(T item);
         Task<T> GetById(int id);
         Task<List<T>> GetAll();
+        Task<int> GetLastId(T item);
     }
 }
