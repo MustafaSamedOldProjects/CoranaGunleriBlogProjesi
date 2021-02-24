@@ -8,6 +8,6 @@ namespace Data.Interfaces
 {
     public interface IYorumDal : IGenericDal<Yorum>
     {
-        Task<ICollection<Yorum>> GetirYorumsByYaziId(); 
+        Task<ICollection<Yorum>> GetirYorumsByYaziId(int id); 
     }
 }

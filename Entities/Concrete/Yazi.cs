@@ -18,5 +18,6 @@ namespace Entities.Concrete
         public ICollection<YaziTag> YaziTags{ get; set; }
         public int YaziTagId{ get; set; }
         public ICollection<YaziYorum> YaziYorums{ get; set; }
+        public int YorumId{ get; set; }
     }
 }
