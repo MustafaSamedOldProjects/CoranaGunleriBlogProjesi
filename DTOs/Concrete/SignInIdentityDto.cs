@@ -6,7 +6,7 @@ namespace DTOs.Concrete
 {
     public class SignInIdentityDto
     {
-        public String Password { get; set; }
+        public string Password { get; set; }
         public string UserName { get; set; }
         public bool RememberMe { get; set; }
     }

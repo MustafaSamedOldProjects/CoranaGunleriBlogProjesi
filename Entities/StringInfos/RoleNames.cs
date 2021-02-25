@@ -4,12 +4,20 @@ using System.Text;
 
 namespace Entities.StringInfos
 {
-    public enum RoleNames
+    //public enum RoleNames
+    //{
+    //    Admin,
+    //    Member,
+    //    Moderator,
+    //    Validator,
+    //    Writer
+    //}
+    public static class RoleNames
     {
-        Admin,
-        Member,
-        Moderator,
-        Validator,
-        Writer
+        public static string Admin { get; set; } = "Admin";
+        public static string Member { get; set; } = "Member";
+        public static string Moderator { get; set; } = "Moderator";
+        public static string Validator { get; set; } = "Validator";
+        public static string Writer { get; set; } = "Writer";
     }
 }
