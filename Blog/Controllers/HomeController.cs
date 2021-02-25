@@ -2,6 +2,7 @@
 using DTOs.Concrete;
 using Entities.Concrete;
 using Entities.StringInfos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -117,7 +118,8 @@ namespace Blog.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index");
         }
-        public  IActionResult TempAction()
+        [Authorize(Roles ="Admin,Member, Moderator,Validator,Writer")]
+        public IActionResult TempAction()
         {
             var signIn =  JsonConvert.DeserializeObject<SignInIdentityDto>(TempData["sharedData"].ToString());
             if (_userManager.GetRolesAsync(_mapper.Map<AppUser>(signIn)).Result.Contains(RoleNames.Admin.ToString()))
