@@ -13,6 +13,7 @@ namespace Data.Concrete.EfCore.Mapping
         {
             builder.HasMany(i => i.YaziYorums).WithOne(i => i.Yorum).HasForeignKey(i=> i.YorumId) ;
             builder.HasOne(i => i.AppUser).WithMany(i => i.Yorums).HasForeignKey(i=> i.Id);
+            builder.HasOne(i => i.ParentYorum).WithMany(i => i.SubYorums).HasForeignKey(i=> i.ParentYorumId);
         }
     }
 }

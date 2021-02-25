@@ -24,9 +24,6 @@ namespace Data.Concrete.EfCore.Repositories
                 Id = i.t.Id,
                 AppUser = i.t.AppUser,
                 AppUserId = i.t.AppUserId,
-                ParentTag = i.t.ParentTag,
-                ParentTagId = i.t.ParentTagId,
-                SubTags = i.t.SubTags,
                 TagName = i.t.TagName,
                 YaziTags = i.t.YaziTags
             }).ToListAsync();

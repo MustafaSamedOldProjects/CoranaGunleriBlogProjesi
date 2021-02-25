@@ -11,8 +11,13 @@ namespace Data.Concrete.EfCore.Mapping
     {
         public void Configure(EntityTypeBuilder<YaziYorum> builder)
         {
+            builder.HasKey(i => new
+            {
+                i.YorumId,
+                i.YaziId
+            });
             builder.HasOne(i => i.Yazi).WithMany(i => i.YaziYorums).HasForeignKey(i=> i.YaziId);
-            builder.HasOne(i => i.Yorum).WithMany(i => i.YaziYorums).HasForeignKey(i=> i.YorumId);
+            builder.HasOne(i => i.Yorum).WithMany(i => i.YaziYorums).HasForeignKey(i=> i.YorumId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

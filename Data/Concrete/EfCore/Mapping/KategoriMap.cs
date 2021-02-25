@@ -13,7 +13,7 @@ namespace Data.Concrete.EfCore.Mapping
         {
             builder.HasKey(i=> i.Id);
             builder.HasMany(i => i.YaziKategoris).WithOne(i => i.Kategori).HasForeignKey(i=> i.KategoriId);
-            builder.HasMany(i => i.SubKategoris).WithOne(i=> i.ParentKategori).HasForeignKey(i=> i.ParentKategoriId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(i => i.SubKategoris).WithOne(i=> i.ParentKategori).HasForeignKey(i=> i.ParentKategoriId).OnDelete(DeleteBehavior.NoAction);
 
         }
     }

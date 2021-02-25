@@ -11,7 +11,6 @@ namespace Data.Concrete.EfCore.Mapping
     {
         public void Configure(EntityTypeBuilder<AppRole> builder)
         {
-            throw new NotImplementedException();
         }
     }
 }
