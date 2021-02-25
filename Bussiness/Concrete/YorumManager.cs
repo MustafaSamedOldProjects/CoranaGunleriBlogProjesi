@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Bussiness.Concrete
 {
-    public class YorumMamager : GenericManager<Yorum>, IYorumService
+    public class YorumManager : GenericManager<Yorum>, IYorumService
     {
         private readonly IYorumDal _yorumDal;
 
-        public YorumMamager(IYorumDal yorumDal, IGenericDal<Yorum> genericDal) : base(genericDal)
+        public YorumManager(IYorumDal yorumDal, IGenericDal<Yorum> genericDal) : base(genericDal)
         {
             _yorumDal = yorumDal;
         }
