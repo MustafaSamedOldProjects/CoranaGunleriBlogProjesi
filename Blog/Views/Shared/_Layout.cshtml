@@ -1,13 +1,53 @@
-﻿<!DOCTYPE html>
-
-<html>
+﻿@inject SignInManager<AppUser> signinmanager;
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>Layout</title>
+    <link href="~/css/CustomGlobal.css" rel="stylesheet" />
 </head>
 <body>
     <div>
-        @RenderBody()
+        <a asp-action="AnaSayfa">AnaSayfa</a>
+        <a asp-action="Index" asp-controller="Yazis">Yazis</a>
+
+        @if (!signinmanager.IsSignedIn(User))
+        {
+            <a asp-action="Index">GirisYap</a>
+        }
+        @if (!signinmanager.IsSignedIn(User))
+        {
+            <a asp-action="KayitOl">KayitOl</a>
+        }
+
+        @if (signinmanager.IsSignedIn(User) && (User.IsInRole(RoleNames.Member.ToString()) || User.IsInRole(RoleNames.Writer.ToString()) || User.IsInRole(RoleNames.Validator.ToString()) || User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString())))
+        {
+            <a asp-action="Index" asp-controller="Member">Yazilar</a>
+        }
+        @if (signinmanager.IsSignedIn(User) && (User.IsInRole(RoleNames.Writer.ToString()) || User.IsInRole(RoleNames.Validator.ToString()) || User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString())))
+        {
+            <a asp-action="Index" asp-controller="Writer">Yaz</a>
+        }
+        @if (signinmanager.IsSignedIn(User) && (User.IsInRole(RoleNames.Validator.ToString()) || User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString())))
+        {
+            <a asp-action="Index" asp-controller="Validator">Onay</a>
+        }
+        @if (signinmanager.IsSignedIn(User) && (User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString())))
+        {
+            <a asp-action="Index" asp-controller="Moderator">Mod</a>
+        }
+        @if (signinmanager.IsSignedIn(User) && User.IsInRole(RoleNames.Admin.ToString()))
+        {
+            <a asp-action="Index" asp-controller="Admin">Admin</a>
+        }
+        @if (signinmanager.IsSignedIn(User))
+        {
+            <a asp-action="LogOut">LogOut</a>
+        }
     </div>
+    @RenderBody()
+    <script src="~/jquery/jquery.min.js"></script>
+    <script src="~/jquery-validate/jquery.validate.min.js"></script>
+    <script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

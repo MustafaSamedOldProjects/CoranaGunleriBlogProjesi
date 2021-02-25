@@ -1,7 +1,18 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
+﻿@model SignInIdentityDto
+<div >
+    <form  asp-action="Index" method="post">
+        <h4 >Giris Yap</h4>
+            <label asp-for="@Model.UserName"></label>
+            <span asp-validation-for="@Model.UserName" ></span>
+            <input asp-for="@Model.UserName" type="text"/>
+            <label asp-for="@Model.Password" ></label>
+            <span asp-validation-for="@Model.Password" ></span>
+            <input asp-for="@Model.Password"  />
+            <input type="checkbox" asp-for="@Model.RememberMe" />
+            <label asp-for="@Model.RememberMe" >Beni Hatırla</label>
+        <div asp-validation-summary="ModelOnly"></div>
+        <input type="submit"value="Giris Yap" />
+        <small>Hesabınız yok mu ? <a asp-action="KayitOl" >Kayit Ol</a></small>
+    </form>
+    Not : Giriş Yaptıktan Sonra "Ana sayfayı" Okumalısınız.
+</div>
