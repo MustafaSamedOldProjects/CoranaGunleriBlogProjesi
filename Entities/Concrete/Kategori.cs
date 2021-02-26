@@ -9,8 +9,8 @@ namespace Entities.Concrete
     {
         public int Id { get; set; }
         public string KategoriIsmi { get; set; }
-        public ICollection<YaziKategori> YaziKategoris { get; set; }
-        public ICollection<Kategori> Kategoris { get; set; }
+        public ICollection<YaziKategori> YaziKategoris { get; set; } = new List<YaziKategori>();
+        public ICollection<Kategori> Kategoris { get; set; } = new List<Kategori>();
         public Kategori ParentKategori { get; set; }
         public int? ParentKategoriId { get; set; }
         public ICollection<Kategori> SubKategoris { get; set; } = new List<Kategori>();

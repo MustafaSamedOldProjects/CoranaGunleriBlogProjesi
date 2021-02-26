@@ -1,4 +1,5 @@
 ﻿using Data.Concrete.EfCore.Mapping;
+using DTOs.Concrete.YaziDtoS;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -38,5 +39,8 @@ namespace Data.Concrete.EfCore.Context
         public DbSet<YaziTag> YaziTags { get; set; }
         public DbSet<YaziYorum> YaziYorums { get; set; }
         public DbSet<Yorum> Yorums { get; set; }
+        //public DbSet<YaziCreateDto> YaziCreateDtos { get; set; } //silinecek
+        //public DbSet<YaziListDto> YaziListDtos { get; set; } //silinecek
+
     }
 }

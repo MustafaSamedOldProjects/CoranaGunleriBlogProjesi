@@ -46,6 +46,8 @@ namespace Blog
                 opt.ExpireTimeSpan = TimeSpan.FromDays(20);
             });
             services.AddDependencies();
+            services.AddTransient<Tag>();
+            services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.AddAuthorization(options =>
             {

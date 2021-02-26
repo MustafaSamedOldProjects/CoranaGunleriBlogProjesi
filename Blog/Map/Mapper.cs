@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DTOs.Concrete;
+using DTOs.Concrete.YaziDtoS;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,14 @@ namespace Blog.Map
             CreateMap<SignUpIdentityDto, AppUser>();
             CreateMap<AppUser, SignInIdentityDto>();
             CreateMap<AppUser, SignUpIdentityDto>();
+
+
+            CreateMap<YaziListDto, Yazi>();
+            CreateMap<Yazi, YaziListDto>();
+
+            CreateMap<YaziCreateDto, Yazi>();
+            CreateMap<Yazi, YaziCreateDto>();
+
         }
     }
 }
