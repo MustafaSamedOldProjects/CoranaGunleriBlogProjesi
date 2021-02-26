@@ -4,6 +4,7 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Bussiness.Concrete
 {
@@ -13,6 +14,11 @@ namespace Bussiness.Concrete
         public YaziKategoriManager(IYaziKategoriDal yaziKategoriDaL,IGenericDal<YaziKategori> genericDal) : base(genericDal) 
         {
             _yaziKategoriDal = yaziKategoriDaL;
+        }
+
+        public Task<List<YaziKategori>> GetYaziKategoris(int[] kategoriler)
+        {
+            _yaziKategoriDal.GetYaziKategoris(kategoriler);
         }
     }
 }

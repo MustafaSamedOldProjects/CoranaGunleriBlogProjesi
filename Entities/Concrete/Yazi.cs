@@ -13,11 +13,8 @@ namespace Entities.Concrete
         public string BeklemeDurumu { get; set; }
         public DateTime YazıldıgıTarih { get; set; }
         public AppUser AppUser { get; set; }
-        public int AppUserId { get; set; }
         public ICollection<YaziKategori> YaziKategoris { get; set; } = new List<YaziKategori>();
         public ICollection<YaziTag> YaziTags{ get; set; } = new List<YaziTag>();
-        public int YaziTagId{ get; set; }
         public ICollection<YaziYorum> YaziYorums { get; set; } = new List<YaziYorum>();
-        public int YorumId{ get; set; }
     }
 }

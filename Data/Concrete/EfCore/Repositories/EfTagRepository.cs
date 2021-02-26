@@ -15,17 +15,19 @@ namespace Data.Concrete.EfCore.Repositories
         public async Task<ICollection<Tag>> GetirTagsByYaziId()
         {
             using BlogContext context = new BlogContext();
-           return await context.Tags.Join(context.Yazis, t => t.Id, y => y.YaziTagId, (t, y) => new
+           return await context.Tags.Join(context.YaziTags, t => t.Id, yt => yt.TagId, (t, yt) => new
             {
                 t,
-                y
-            }).Where(tt => tt.t.Id == tt.y.YaziTagId).Select(i => new Tag()
+                yt
+            }).Join(context.Yazis,i => i.yt.YaziId,i=> i.Id,(tt,y) => new { 
+            tt,
+            y
+            }).Where(i =>i.y.Id == i.tt.yt.YaziId).Select(i => new Tag()
             {
-                Id = i.t.Id,
-                AppUser = i.t.AppUser,
-                AppUserId = i.t.AppUserId,
-                TagName = i.t.TagName,
-                YaziTags = i.t.YaziTags
+                Id = i.tt.t.Id,
+                AppUser = i.tt.t.AppUser,
+                TagName = i.tt.t.TagName,
+                YaziTags = i.tt.t.YaziTags
             }).ToListAsync();
 
         }

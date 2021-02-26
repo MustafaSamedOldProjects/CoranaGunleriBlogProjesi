@@ -22,6 +22,8 @@ namespace Blog.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IYaziService _yaziService;
+        private readonly IYaziKategoriService _yaziKategoriService;
+        private readonly IYaziYorumService _yaziYorumService;
         private readonly IKategoriService _kategoriService;
         private readonly ITagService _tagService;
         private readonly UserManager<AppUser> _userManager;
@@ -31,6 +33,8 @@ namespace Blog.Controllers
         private readonly IHttpContextAccessor _contextAccessor;
         public WriterController(
             IYaziService yaziService,
+            IYaziKategoriService yaziKategoriService,
+            IYaziYorumService yaziYorumService,
             IKategoriService kategoriService,
             ITagService tagService,
             UserManager<AppUser> userManager,
@@ -39,6 +43,8 @@ namespace Blog.Controllers
             IHttpContextAccessor contextAccessor,
         IMapper mapper)
         {
+            _yaziKategoriService = yaziKategoriService;
+            _yaziYorumService = yaziYorumService;
             _contextAccessor = contextAccessor;
             _webHostEnvironment = webHostEnvironment;
             _signInManager = signInManager;
@@ -124,11 +130,15 @@ namespace Blog.Controllers
                             Id = user.Id
                         },
                         BeklemeDurumu = OnayDurumlari.OnayBekliyor.ToString(),
-                        YaziKategoris = yazikategoris,
+                        YaziKategoris = _yaziKategoriService.GetYaziKategoris(new int[] { 
+                        yaziCreateDto.KategoriId
+                        }).Result,
                         YaziTags = tags,
                         YazıldıgıTarih = DateTime.Now,
                         GorunurResmi = fileBytes,
-                        Location = path
+                        Location = path,
+                        YaziYorums = 
+                        
                     };
 
                     await _yaziService.Add(yazi);

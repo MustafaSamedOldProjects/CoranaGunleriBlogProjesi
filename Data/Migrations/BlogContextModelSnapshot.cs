@@ -120,6 +120,8 @@ namespace Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("KategoriId")
@@ -143,11 +145,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Entities.Concrete.Tag", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("TagName")
@@ -155,17 +152,12 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Yazi", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("BeklemeDurumu")
@@ -177,14 +169,8 @@ namespace Data.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("YaziTagId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("YazıldıgıTarih")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("YorumId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -239,9 +225,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Entities.Concrete.Yorum", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("BeklemeDurumu")
@@ -382,7 +365,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Entities.Concrete.AppUser", "AppUser")
                         .WithMany("Tags")
-                        .HasForeignKey("AppUserId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

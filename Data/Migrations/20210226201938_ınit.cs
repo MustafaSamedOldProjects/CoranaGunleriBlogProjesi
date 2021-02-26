@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class InitialContext : Migration
+    public partial class ınit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -184,27 +184,18 @@ namespace Data.Migrations
                 name: "Tags",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TagName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ParentTagId = table.Column<int>(type: "int", nullable: true),
-                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    TagName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tags_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
+                        name: "FK_Tags_AspNetUsers_Id",
+                        column: x => x.Id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Tags_Tags_ParentTagId",
-                        column: x => x.ParentTagId,
-                        principalTable: "Tags",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -215,10 +206,7 @@ namespace Data.Migrations
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GorunurResmi = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     BeklemeDurumu = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    YazıldıgıTarih = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false),
-                    YaziTagId = table.Column<int>(type: "int", nullable: false),
-                    YorumId = table.Column<int>(type: "int", nullable: false)
+                    YazıldıgıTarih = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -239,7 +227,7 @@ namespace Data.Migrations
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BeklemeDurumu = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     YazildigiTarih = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                    ParentYorumId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -250,6 +238,12 @@ namespace Data.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Yorums_Yorums_ParentYorumId",
+                        column: x => x.ParentYorumId,
+                        principalTable: "Yorums",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -372,16 +366,6 @@ namespace Data.Migrations
                 column: "ParentKategoriId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tags_AppUserId",
-                table: "Tags",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tags_ParentTagId",
-                table: "Tags",
-                column: "ParentTagId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_YaziKategoris_YaziId",
                 table: "YaziKategoris",
                 column: "YaziId");
@@ -395,6 +379,11 @@ namespace Data.Migrations
                 name: "IX_YaziYorums_YaziId",
                 table: "YaziYorums",
                 column: "YaziId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Yorums_ParentYorumId",
+                table: "Yorums",
+                column: "ParentYorumId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

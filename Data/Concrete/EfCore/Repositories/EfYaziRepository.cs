@@ -40,19 +40,17 @@ namespace Data.Concrete.EfCore.Repositories
         public async Task<List<Yazi>> GetYazi()
         {
             using BlogContext context = new BlogContext();
-            return await context.Yazis.Join(context.Users, y => y.AppUserId, u => u.Id, (y, u) => new
+            return await context.Yazis.Join(context.Users, y => y.AppUser.Id, u => u.Id, (y, u) => new
             {
                 y,
                 u
-            }).Where(tt => tt.y.AppUserId == tt.u.Id ).Select(i => new Yazi()
+            }).Where(tt => tt.y.AppUser.Id == tt.u.Id ).Select(i => new Yazi()
             {
                 Id = i.y.Id,
                 AppUser= i.y.AppUser,
-                AppUserId = i.y.AppUserId,
                 BeklemeDurumu= i.y.BeklemeDurumu,
                 GorunurResmi= i.y.GorunurResmi,
                 Location= i.y.Location,
-                YaziTagId= i.y.YaziTagId,
                 YaziTags= i.y.YaziTags,
                 YaziYorums= i.y.YaziYorums,
                 YazıldıgıTarih= i.y.YazıldıgıTarih,
@@ -62,11 +60,11 @@ namespace Data.Concrete.EfCore.Repositories
         public async Task<List<AppUser>> GetYaziSahipUsers()
         {
             using BlogContext context = new BlogContext();
-            return await context.Yazis.Join(context.Users, y => y.AppUserId, u => u.Id, (y, u) => new
+            return await context.Yazis.Join(context.Users, y => y.AppUser.Id, u => u.Id, (y, u) => new
             {
                 y,
                 u
-            }).Where(tt => tt.y.AppUserId == tt.u.Id).Select(i => new AppUser()
+            }).Where(tt => tt.y.AppUser.Id == tt.u.Id).Select(i => new AppUser()
             {
                 Id = i.u.Id,
                 UserName = i.u.UserName,

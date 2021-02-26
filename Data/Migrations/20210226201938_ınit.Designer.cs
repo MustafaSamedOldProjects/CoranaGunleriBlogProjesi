@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20210224230023_InitialContext")]
-    partial class InitialContext
+    [Migration("20210226201938_ınit")]
+    partial class ınit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -122,6 +122,8 @@ namespace Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("KategoriId")
@@ -145,14 +147,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Entities.Concrete.Tag", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ParentTagId")
                         .HasColumnType("int");
 
                     b.Property<string>("TagName")
@@ -160,19 +154,12 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("ParentTagId");
-
                     b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Yazi", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("BeklemeDurumu")
@@ -184,14 +171,8 @@ namespace Data.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("YaziTagId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("YazıldıgıTarih")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("YorumId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -248,19 +229,21 @@ namespace Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("BeklemeDurumu")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ParentYorumId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("YazildigiTarih")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentYorumId");
 
                     b.ToTable("Yorums");
                 });
@@ -384,17 +367,11 @@ namespace Data.Migrations
                 {
                     b.HasOne("Entities.Concrete.AppUser", "AppUser")
                         .WithMany("Tags")
-                        .HasForeignKey("AppUserId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Concrete.Tag", "ParentTag")
-                        .WithMany("SubTags")
-                        .HasForeignKey("ParentTagId");
-
                     b.Navigation("AppUser");
-
-                    b.Navigation("ParentTag");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Yazi", b =>
@@ -473,7 +450,13 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Entities.Concrete.Yorum", "ParentYorum")
+                        .WithMany("SubYorums")
+                        .HasForeignKey("ParentYorumId");
+
                     b.Navigation("AppUser");
+
+                    b.Navigation("ParentYorum");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -547,8 +530,6 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Entities.Concrete.Tag", b =>
                 {
-                    b.Navigation("SubTags");
-
                     b.Navigation("YaziTags");
                 });
 
@@ -563,6 +544,8 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Entities.Concrete.Yorum", b =>
                 {
+                    b.Navigation("SubYorums");
+
                     b.Navigation("YaziYorums");
                 });
 #pragma warning restore 612, 618

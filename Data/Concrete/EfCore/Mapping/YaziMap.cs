@@ -11,6 +11,7 @@ namespace Data.Concrete.EfCore.Mapping
     {
         public void Configure(EntityTypeBuilder<Yazi> builder)
         {
+            builder.HasKey(i => i.Id);
             builder.HasMany(i => i.YaziKategoris).WithOne(i=> i.Yazi).HasForeignKey(i=> i.YaziId);
             builder.HasOne(i => i.AppUser).WithMany(i=> i.Yazis).HasForeignKey(i=> i.Id);
 
