@@ -15,9 +15,9 @@ namespace Bussiness.Concrete
         {
             _tagDal = tagDal;
         }
-        public async Task<ICollection<Tag>> GetirTagsByYaziId()
+        public async Task<ICollection<Tag>> GetirTagsByYaziId(int id)
         {
-            return await _tagDal.GetirTagsByYaziId();
+            return await _tagDal.GetirTagsByYaziId(id);
         }
     }
 }

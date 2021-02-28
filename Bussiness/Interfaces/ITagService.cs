@@ -8,6 +8,6 @@ namespace Bussiness.Interfaces
 {
     public interface ITagService : IGenericService<Tag>
     {
-        Task<ICollection<Tag>> GetirTagsByYaziId();
+        Task<ICollection<Tag>> GetirTagsByYaziId(int id);
     }
 }

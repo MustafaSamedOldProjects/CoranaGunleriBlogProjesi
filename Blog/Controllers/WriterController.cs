@@ -14,6 +14,8 @@ using Entities.StringInfos;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using System.Net.Http.Headers;
+using Mvc.Helpers;
 
 namespace Blog.Controllers
 {
@@ -27,6 +29,7 @@ namespace Blog.Controllers
         private readonly IKategoriService _kategoriService;
         private readonly ITagService _tagService;
         private readonly UserManager<AppUser> _userManager;
+        private readonly KaydetHelp kaydetHelp;
         private readonly HttpContext httpContext;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -47,6 +50,7 @@ namespace Blog.Controllers
             _yaziYorumService = yaziYorumService;
             _contextAccessor = contextAccessor;
             _webHostEnvironment = webHostEnvironment;
+            kaydetHelp = new KaydetHelp(webHostEnvironment);
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
@@ -56,8 +60,27 @@ namespace Blog.Controllers
         }
         public IActionResult Index()
         {
-          
-            return View(_mapper.Map<List<YaziListDto>>(_yaziService.GetAll().Result));
+            List<YaziListDto> list = new List<YaziListDto>();
+            string folder = Environment.CurrentDirectory;
+
+            foreach (var item in _yaziService.GetAll().Result)
+            {
+                string readText = System.IO.File.ReadAllText(folder +item.Location);
+
+                list.Add(new YaziListDto()
+                {
+                    AppUser = item.AppUser,
+                    BeklemeDurumu = item.BeklemeDurumu,
+                    Location = readText,
+                    YazıldıgıTarih = item.YazıldıgıTarih,
+                    Kategori = _yaziService.GetYaziKategoris(item.Id).Result,
+                    Tag = _tagService.GetirTagsByYaziId(item.Id).Result,
+                    GorunurResmi =item.GorunurResmi
+
+                });
+            }
+            return View(list);
+            //return View(_mapper.Map<List<YaziListDto>>(_yaziService.GetAll().Result));
         }
         public IActionResult Create()
         {
@@ -134,6 +157,14 @@ namespace Blog.Controllers
                         kategorids.Add(item);
                     }
                     var path = @"/wwwroot/AnaKlasor/Yazilar/"+ Guid.NewGuid()+".txt";
+                    
+                    string folder = Environment.CurrentDirectory;
+                   
+                    string fullPath = folder + path;
+                    string[] authors = {"Mahesh Chand", "Allen O'Neill", "David McCarter",
+"Raj Kumar", "Dhananjay Kumar"};
+                  
+                    System.IO.File.WriteAllText(fullPath,yaziCreateDto.Body);
                     var yazi = new Yazi()
                     {
                         AppUserId = user.Id,
@@ -166,6 +197,23 @@ namespace Blog.Controllers
             viev.Body = yaziCreateDto.Body;
 
             return View(viev);
+        }
+        public async Task<JsonResult> KaydetImage(List<IFormFile> file)
+        {
+            foreach (IFormFile source in file)
+            {
+                string filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.Trim('"');
+
+                filename = kaydetHelp.EnsureCorrectFilename(filename);
+                //var a = System.IO.File.Create(kaydetHelp.GetPathAndFilename(filename));
+                using (FileStream output = System.IO.File.Create(kaydetHelp.GetPathAndFilename(filename)))
+                {
+                    await source.CopyToAsync(output);
+                }
+                return Json(new { location = Url.Content("~/AnaKlasor/Resimler/" + filename) });
+            }
+            return Json("Yüklendi");
+
         }
     }
 }

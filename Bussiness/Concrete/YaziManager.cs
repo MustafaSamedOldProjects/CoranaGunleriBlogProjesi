@@ -40,6 +40,11 @@ namespace Bussiness.Concrete
             return await _yaziDal.GetYazi();
         }
 
+        public async Task<List<Kategori>> GetYaziKategoris(int id)
+        {
+            return await _yaziDal.GetYaziKategoris(id);
+        }
+
         public async Task<List<AppUser>> GetYaziSahipUsers()
         {
             return await _yaziDal.GetYaziSahipUsers();

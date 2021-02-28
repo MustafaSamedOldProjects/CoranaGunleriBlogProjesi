@@ -8,6 +8,6 @@ namespace Data.Interfaces
 {
     public interface ITagDal : IGenericDal<Tag>
     {
-        Task<ICollection<Tag>> GetirTagsByYaziId();
+        Task<ICollection<Tag>> GetirTagsByYaziId(int id);
     }
 }

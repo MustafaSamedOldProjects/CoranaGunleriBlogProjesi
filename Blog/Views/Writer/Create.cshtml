@@ -3,6 +3,7 @@
 <h4>YaziCreateDto</h4>
 <hr />
 <link href="~/custom/css/wrapperImagePreview/wrappeImagepreview.css" rel="stylesheet" />
+<link href="~/custom/css/tiny/tiny.css" rel="stylesheet" />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
@@ -19,9 +20,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Body" class="control-label"></label>
-                <input asp-for="Body" class="form-control" />
+                @*<input asp-for="Resim" id="Resim" type="file" name="Resim" style="display: none;" onchange="" />*@
+                <textarea asp-for="Body" id="myTextarea"></textarea>
                 <span asp-validation-for="Body" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="TagId" class="control-label"></label>
                 <select multiple id="selectlist-tag" size="3" class="form-control" asp-for="TagId" asp-items="Model.Tags.Select(a =>  new SelectListItem {
@@ -88,7 +91,8 @@
 
 @*<script src="~/custom/js/select/JavaScript.js"></script>*@
 <script src="~/custom/js/imagepreview/imagepreview.js"></script>
-
+<script src="https://cdn.tiny.cloud/1/0lds4okpny6agrn5rzy80hymus1vdx79uz2n02fspgw4720e/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="~/custom/js/tinymce/tiny.js"></script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

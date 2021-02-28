@@ -71,5 +71,24 @@ namespace Data.Concrete.EfCore.Repositories
                 Email = i.u.Email,
             }).ToListAsync();
         }
+        public async Task<List<Kategori>> GetYaziKategoris(int id)
+        {
+            using BlogContext context = new BlogContext();
+            return await context.Yazis.Join(context.YaziKategoris, y => y.Id, yk => yk.YaziId, (y, yk) => new {
+                y,
+                yk
+            }).Join(context.Kategoris, tt => tt.yk.KategoriId, k => k.Id, (tt, k) => new {
+                tt,
+                k
+            }).Where(i => id == i.tt.yk.YaziId).Select(i => new Kategori() {
+
+                Id = i.k.Id,
+                KategoriIsmi = i.k.KategoriIsmi,
+                ParentKategori = i.k.ParentKategori,
+                ParentKategoriId = i.k.ParentKategoriId,
+                SubKategoris = i.k.SubKategoris,
+                YaziKategoris = i.k.YaziKategoris
+            }).ToListAsync();
+        }
     }
 }

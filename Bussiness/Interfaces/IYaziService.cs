@@ -13,5 +13,6 @@ namespace Bussiness.Interfaces
         Task<List<Yazi>> GetSilinenYazilar(); //Admin(ler) Görebilecek.
         Task<List<AppUser>> GetYaziSahipUsers();
         Task<List<Yazi>> GetYazi();
+        Task<List<Kategori>> GetYaziKategoris(int id);
     }
 }
