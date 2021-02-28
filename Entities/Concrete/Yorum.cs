@@ -15,6 +15,7 @@ namespace Entities.Concrete
         public int? ParentYorumId { get; set; }
         public ICollection<Yorum> SubYorums { get; set; }
         public AppUser AppUser { get; set; }
+        public int AppUserId { get; set; }
         public ICollection<YaziYorum> YaziYorums { get; set; }
     }
 }

@@ -11,9 +11,8 @@ namespace Data.Concrete.EfCore.Mapping
     {
         public void Configure(EntityTypeBuilder<Yorum> builder)
         {
-            builder.HasKey(i => i.Id);
             builder.HasMany(i => i.YaziYorums).WithOne(i => i.Yorum).HasForeignKey(i=> i.YorumId) ;
-            builder.HasOne(i => i.AppUser).WithMany(i => i.Yorums).HasForeignKey(i=> i.Id);
+            builder.HasOne(i => i.AppUser).WithMany(i => i.Yorums).HasForeignKey(i=> i.AppUserId);
             builder.HasOne(i => i.ParentYorum).WithMany(i => i.SubYorums).HasForeignKey(i=> i.ParentYorumId);
         }
     }

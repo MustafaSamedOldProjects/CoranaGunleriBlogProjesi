@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20210226201938_ınit")]
-    partial class ınit
+    [Migration("20210227183334_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -147,6 +147,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Entities.Concrete.Tag", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("TagName")
@@ -154,12 +159,19 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Yazi", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("BeklemeDurumu")
@@ -175,6 +187,8 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Yazis");
                 });
@@ -227,6 +241,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Entities.Concrete.Yorum", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("BeklemeDurumu")
@@ -242,6 +261,8 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("ParentYorumId");
 
@@ -367,7 +388,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Entities.Concrete.AppUser", "AppUser")
                         .WithMany("Tags")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -378,7 +399,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Entities.Concrete.AppUser", "AppUser")
                         .WithMany("Yazis")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -446,7 +467,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Entities.Concrete.AppUser", "AppUser")
                         .WithMany("Yorums")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

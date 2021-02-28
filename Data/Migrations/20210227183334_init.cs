@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class ınit : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -184,15 +184,17 @@ namespace Data.Migrations
                 name: "Tags",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    TagName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TagName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AppUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tags_AspNetUsers_Id",
-                        column: x => x.Id,
+                        name: "FK_Tags_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -202,18 +204,20 @@ namespace Data.Migrations
                 name: "Yazis",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GorunurResmi = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     BeklemeDurumu = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    YazıldıgıTarih = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    YazıldıgıTarih = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AppUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Yazis", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Yazis_AspNetUsers_Id",
-                        column: x => x.Id,
+                        name: "FK_Yazis_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -223,18 +227,20 @@ namespace Data.Migrations
                 name: "Yorums",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BeklemeDurumu = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     YazildigiTarih = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ParentYorumId = table.Column<int>(type: "int", nullable: true)
+                    ParentYorumId = table.Column<int>(type: "int", nullable: true),
+                    AppUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Yorums", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Yorums_AspNetUsers_Id",
-                        column: x => x.Id,
+                        name: "FK_Yorums_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -366,9 +372,19 @@ namespace Data.Migrations
                 column: "ParentKategoriId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tags_AppUserId",
+                table: "Tags",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_YaziKategoris_YaziId",
                 table: "YaziKategoris",
                 column: "YaziId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Yazis_AppUserId",
+                table: "Yazis",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_YaziTags_YaziId",
@@ -379,6 +395,11 @@ namespace Data.Migrations
                 name: "IX_YaziYorums_YaziId",
                 table: "YaziYorums",
                 column: "YaziId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Yorums_AppUserId",
+                table: "Yorums",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Yorums_ParentYorumId",

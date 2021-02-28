@@ -2,14 +2,20 @@
 @inject Entities.Concrete.Tag tagim
 <h4>YaziCreateDto</h4>
 <hr />
+<link href="~/custom/css/wrapperImagePreview/wrappeImagepreview.css" rel="stylesheet" />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="GorunurResmi" class="control-label"></label>
-                <input type="file" accept="image/*"  asp-for="GorunurResmi" class="form-control" />
+                <input type="file" accept="image/*" asp-for="GorunurResmi" class="form-control" />
                 <span asp-validation-for="GorunurResmi" class="text-danger"></span>
+                <div class="wrapper">
+                    <div class="preview">
+                        <p>No files currently selected for upload</p>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Body" class="control-label"></label>
@@ -17,58 +23,58 @@
                 <span asp-validation-for="Body" class="text-danger"></span>
             </div>
             <div class="form-group">
-                    <label asp-for="TagId" class="control-label"></label>
-                    <select multiple id="selectlist-tag" size="3" class="form-control" asp-for="TagId" asp-items="Model.Tags.Select(a =>  new SelectListItem {
+                <label asp-for="TagId" class="control-label"></label>
+                <select multiple id="selectlist-tag" size="3" class="form-control" asp-for="TagId" asp-items="Model.Tags.Select(a =>  new SelectListItem {
                         Value = a.Id.ToString(),
                         Text =  a.TagName
                     })">
-                    </select>
-                    <span asp-validation-for="Tags" class="text-danger"></span>
-                </div>
-            @*<div class="form-group">
-                <label asp-for="Tags" class="control-label"></label>
-                <select size="2" id="selectlist-tag" size="3" class="form-control" multiple asp-for="Tags">
-                    @foreach (var item in Model.Tags)
-                    {
-                        <option name="TagId" 
-                                value="
-                                 
-
-                                    @{Tag İST =  new Tag()
-                                            {
-                                                TagName = item.TagName,
-                                                Id = item.Id
-                                            }
-                                      };
-                                    @İST.ToString();
-                                "
-                                @(İST)
-                           >
-               @item.TagName</option>
-                    }
                 </select>
-
                 <span asp-validation-for="Tags" class="text-danger"></span>
-            </div>*@
+            </div>
+            @*<div class="form-group">
+                    <label asp-for="Tags" class="control-label"></label>
+                    <select size="2" id="selectlist-tag" size="3" class="form-control" multiple asp-for="Tags">
+                        @foreach (var item in Model.Tags)
+                        {
+                            <option name="TagId"
+                                    value="
+
+
+                                        @{Tag İST =  new Tag()
+                                                {
+                                                    TagName = item.TagName,
+                                                    Id = item.Id
+                                                }
+                                          };
+                                        @İST.ToString();
+                                    "
+                                    @(İST)
+                               >
+                   @item.TagName</option>
+                        }
+                    </select>
+
+                    <span asp-validation-for="Tags" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
-                    <label asp-for="KategoriId" class="control-label"></label>
-                    <select multiple id="selectlist-kategori" size="3" class="form-control" asp-for="KategoriId" asp-items="Model.Kategoris.Select(a =>  new SelectListItem {
+                <label asp-for="KategoriId" class="control-label"></label>
+                <select multiple id="selectlist-kategori" size="3" class="form-control" asp-for="KategoriId" asp-items="Model.Kategoris.Select(a =>  new SelectListItem {
                         Value = a.Id.ToString(),
                         Text =  a.KategoriIsmi
                     })"></select>
-                    <span asp-validation-for="Kategoris" class="text-danger"></span>
-                </div>
+                <span asp-validation-for="Kategoris" class="text-danger"></span>
+            </div>
             @*<div class="form-group">
-                <label asp-for="Kategoris" class="control-label"></label>
-                <select size="2" id="selectlist-tag" size="3" class="form-control" multiple asp-for="Kategoris">
-                    @foreach (var item in Model.Kategoris)
-                    {
-                        <option name="KategoriId" value="@item.Id">@item.KategoriIsmi</option>
-                    }
-                </select>
+                    <label asp-for="Kategoris" class="control-label"></label>
+                    <select size="2" id="selectlist-tag" size="3" class="form-control" multiple asp-for="Kategoris">
+                        @foreach (var item in Model.Kategoris)
+                        {
+                            <option name="KategoriId" value="@item.Id">@item.KategoriIsmi</option>
+                        }
+                    </select>
 
-                <span asp-validation-for="Tags" class="text-danger"></span>
-            </div>*@
+                    <span asp-validation-for="Tags" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -81,6 +87,7 @@
 </div>
 
 @*<script src="~/custom/js/select/JavaScript.js"></script>*@
+<script src="~/custom/js/imagepreview/imagepreview.js"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

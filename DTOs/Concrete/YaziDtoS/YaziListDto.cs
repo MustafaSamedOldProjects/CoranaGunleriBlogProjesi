@@ -9,7 +9,8 @@ namespace DTOs.Concrete.YaziDtoS
     {
         public int Id { get; set; }
         public string Location { get; set; }
-        public byte[] GorunurResmi { get; set; }
+        public  byte[] GorunurResmi;
+        //public byte[] GorunurResmi { get; set; }
         public string BeklemeDurumu { get; set; }
         public DateTime YazıldıgıTarih { get; set; }
         public AppUser AppUser { get; set; }

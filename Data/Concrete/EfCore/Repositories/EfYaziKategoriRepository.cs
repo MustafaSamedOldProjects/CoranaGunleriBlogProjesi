@@ -12,10 +12,20 @@ namespace Data.Concrete.EfCore.Repositories
 {
     public class EfYaziKategoriRepository : EfGenericRepository<YaziKategori>, IYaziKategoriDal
     {
-        public async Task<List<YaziKategori>> GetYaziKategoris(int[] kategoriler)
+        public async Task<List<YaziKategori>> GetYaziKategoris(List<int> kategoriler)
         {
+            var sayilar = new int[25];
+            for (int i = 0; i < 25; i++)
+            {
+                foreach (var item in kategoriler)
+                {
+                    sayilar[i] = Convert.ToInt32(item);
+                }
+
+            }
+            
             using BlogContext context = new BlogContext();
-            return await context.YaziKategoris.Where(i => kategoriler.Contains(i.KategoriId)).Select(İ => new YaziKategori()
+            return await context.YaziKategoris.Where(i => sayilar.Contains(i.KategoriId)).Select(İ => new YaziKategori()
             {
                 KategoriId = İ.KategoriId
             }).ToListAsync();

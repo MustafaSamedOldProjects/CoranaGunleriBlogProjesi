@@ -3,6 +3,7 @@ using Bussiness.CustomIoCContainer.MicrosoftIoCContainer;
 using Data.Concrete.EfCore.Context;
 using Entities.Concrete;
 using Entities.StringInfos;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -48,7 +49,7 @@ namespace Blog
             services.AddDependencies();
             services.AddTransient<Tag>();
             services.AddHttpContextAccessor();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddFluentValidation();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(RoleNames.Admin.ToString(),

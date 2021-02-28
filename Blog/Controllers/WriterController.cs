@@ -56,6 +56,7 @@ namespace Blog.Controllers
         }
         public IActionResult Index()
         {
+          
             return View(_mapper.Map<List<YaziListDto>>(_yaziService.GetAll().Result));
         }
         public IActionResult Create()
@@ -69,7 +70,7 @@ namespace Blog.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] YaziCreateDto yaziCreateDto, [FromForm] IFormFile GorunurResmi)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && GorunurResmi != null)
             {
                 if (User.Identity.IsAuthenticated)
                 {
@@ -89,20 +90,20 @@ namespace Blog.Controllers
                     //}
 
                     var yazikategoris = new List<YaziKategori>();
-                    foreach (var item in yaziCreateDto.Kategoris)
+                    foreach (var item in yaziCreateDto.KategoriId)
                     {
                         yazikategoris.Add(new YaziKategori()
                         {
-                            KategoriId = item.Id
+                            KategoriId = item
                         });
                     }
 
                     var tags= new List<YaziTag>();
-                    foreach (var item in yaziCreateDto.Tags)
+                    foreach (var item in yaziCreateDto.TagId)
                     {
                         tags.Add(new YaziTag()
                         {
-                            TagId = item.Id
+                            TagId = item
                         });
                     }
 
@@ -122,25 +123,27 @@ namespace Blog.Controllers
                     //    fs1.CopyTo(ms1);
                     //    p1 = ms1.ToArray();
                     //}
-                    var path = _webHostEnvironment.WebRootPath + @"AnaKlasor/Yazilar"+ new Guid();
+                    var tagids = new List<int>();
+                    foreach (var item in yaziCreateDto.TagId)
+                    {
+                        tagids.Add(item);
+                    }
+                    var kategorids = new List<int>();
+                    foreach (var item in yaziCreateDto.KategoriId)
+                    {
+                        kategorids.Add(item);
+                    }
+                    var path = @"/wwwroot/AnaKlasor/Yazilar/"+ Guid.NewGuid()+".txt";
                     var yazi = new Yazi()
                     {
-                        AppUser = new AppUser()
-                        {
-                            Id = user.Id
-                        },
+                        AppUserId = user.Id,
                         BeklemeDurumu = OnayDurumlari.OnayBekliyor.ToString(),
-                        YaziKategoris = _yaziKategoriService.GetYaziKategoris(new int[] { 
-                        yaziCreateDto.KategoriId
-                        }).Result,
+                        YaziKategoris = yazikategoris,
                         YaziTags = tags,
                         YazıldıgıTarih = DateTime.Now,
                         GorunurResmi = fileBytes,
-                        Location = path,
-                        YaziYorums = 
-                        
+                        Location = path
                     };
-
                     await _yaziService.Add(yazi);
                     return RedirectToAction("Index");
                  }
@@ -157,6 +160,10 @@ namespace Blog.Controllers
             YaziCreateDto viev = new YaziCreateDto();
             viev.Kategoris = _kategoriService.GetAll().Result;
             viev.Tags = _tagService.GetAll().Result;
+            viev.GorunurResmi = yaziCreateDto.GorunurResmi;
+            viev.Kategoris = _kategoriService.GetAll().Result;
+            viev.Tags = _tagService.GetAll().Result;
+            viev.Body = yaziCreateDto.Body;
 
             return View(viev);
         }

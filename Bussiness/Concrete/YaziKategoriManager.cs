@@ -16,9 +16,9 @@ namespace Bussiness.Concrete
             _yaziKategoriDal = yaziKategoriDaL;
         }
 
-        public Task<List<YaziKategori>> GetYaziKategoris(int[] kategoriler)
+        public async Task<List<YaziKategori>> GetYaziKategoris(List<int> kategoriler)
         {
-            _yaziKategoriDal.GetYaziKategoris(kategoriler);
+           return await _yaziKategoriDal.GetYaziKategoris(kategoriler);
         }
     }
 }

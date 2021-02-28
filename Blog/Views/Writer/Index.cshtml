@@ -29,7 +29,7 @@
                     @Html.DisplayFor(modelItem => item.Location)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.GorunurResmi)
+                    @Html.Raw("<img src=\"data:image/jpeg;base64," + Convert.ToBase64String(item.GorunurResmi) + "\" class=\"img-thumbnail\" style=\"width: 100px; height: 100px; margin-bottom: 20px;\" />")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.BeklemeDurumu)
@@ -46,7 +46,6 @@
         }
     </tbody>
 </table>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

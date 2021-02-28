@@ -7,6 +7,6 @@ namespace Bussiness.Interfaces
 {
     public interface IYaziKategoriService : IGenericService<YaziKategori>
     {
-        Task<List<YaziKategori>> GetYaziKategoris(int[] kategoriler);
+        Task<List<YaziKategori>> GetYaziKategoris(List<int> kategoriler);
     }
 }

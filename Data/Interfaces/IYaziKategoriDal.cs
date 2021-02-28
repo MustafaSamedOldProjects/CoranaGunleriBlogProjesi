@@ -8,7 +8,7 @@ namespace Data.Interfaces
 {
     public interface IYaziKategoriDal : IGenericDal<YaziKategori>
     {
-        Task<List<YaziKategori>> GetYaziKategoris(int[] kategoriler);
+        Task<List<YaziKategori>> GetYaziKategoris(List<int> kategoriler);
         
     }
 }

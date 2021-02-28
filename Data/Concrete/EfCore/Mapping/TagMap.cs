@@ -11,7 +11,6 @@ namespace Data.Concrete.EfCore.Mapping
     {
         public void Configure(EntityTypeBuilder<Tag> builder)
         {
-            builder.HasKey(i => i.Id);
             builder.HasMany(i => i.YaziTags).WithOne(i => i.Tag).HasForeignKey(i => i.TagId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(i => i.AppUser).WithMany(i => i.Tags);
         }

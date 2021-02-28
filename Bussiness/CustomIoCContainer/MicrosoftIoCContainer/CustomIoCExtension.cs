@@ -1,7 +1,10 @@
 ﻿using Bussiness.Concrete;
 using Bussiness.Interfaces;
+using Bussiness.ValidationRules;
 using Data.Concrete.EfCore.Repositories;
 using Data.Interfaces;
+using DTOs.Concrete.YaziDtoS;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,6 +16,8 @@ namespace Bussiness.CustomIoCContainer.MicrosoftIoCContainer
     {
         public static void AddDependencies(this IServiceCollection services)
         {
+            #region repoandservices
+
             services.AddScoped(typeof(IGenericDal<>), typeof(EfGenericRepository<>));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
 
@@ -36,6 +41,13 @@ namespace Bussiness.CustomIoCContainer.MicrosoftIoCContainer
 
             services.AddScoped<IYorumDal, EfYorumRepository>();
             services.AddScoped<IYorumService, YorumManager>();
+            #endregion
+            #region valid
+            services.AddTransient<IValidator<YaziCreateDto>,YaziCreateValidator >();
+            services.AddTransient<IValidator<YaziListDto>,YaziListValidator >();
+            #endregion
+
+
 
         }
 
