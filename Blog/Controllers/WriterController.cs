@@ -69,7 +69,8 @@ namespace Blog.Controllers
 
                 list.Add(new YaziListDto()
                 {
-                    AppUser = item.AppUser,
+                    AppUser = _userManager.FindByIdAsync(item.AppUserId.ToString()).Result,
+                    AppUserId = item.AppUserId,
                     BeklemeDurumu = item.BeklemeDurumu,
                     Location = readText,
                     YazıldıgıTarih = item.YazıldıgıTarih,
@@ -176,6 +177,13 @@ namespace Blog.Controllers
                         Location = path
                     };
                     await _yaziService.Add(yazi);
+
+
+                
+
+
+
+
                     return RedirectToAction("Index");
                  }
             }

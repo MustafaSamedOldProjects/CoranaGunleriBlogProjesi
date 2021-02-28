@@ -14,6 +14,7 @@ namespace DTOs.Concrete.YaziDtoS
         public string BeklemeDurumu { get; set; }
         public DateTime YazıldıgıTarih { get; set; }
         public AppUser AppUser { get; set; }
+        public int AppUserId { get; set; }
         public ICollection<Kategori> Kategori { get; set; }
         public ICollection<Tag> Tag { get; set; }
     }

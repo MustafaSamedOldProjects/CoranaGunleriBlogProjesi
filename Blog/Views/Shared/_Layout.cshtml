@@ -42,7 +42,7 @@
         }
         @if (signinmanager.IsSignedIn(User))
         {
-            <a asp-action="LogOut">LogOut</a>
+            <a asp-controller="Home" asp-action="LogOut">LogOut</a>
         }
     </div>
     @RenderBody()

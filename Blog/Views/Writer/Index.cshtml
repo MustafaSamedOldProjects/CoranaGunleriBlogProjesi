@@ -18,32 +18,60 @@
             <th>
                 @Html.DisplayNameFor(model => model.YazıldıgıTarih)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kategori)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tag)
+            </th>
+            
+
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td class="Body-duzelt">
-                    @Html.Raw(HttpUtility.HtmlDecode(item.Location))
-                    @*@Html.DisplayFor(modelItem => item.Location)*@
-                </td>
-                <td>
-                    @Html.Raw("<img src=\"data:image/jpeg;base64," + Convert.ToBase64String(item.GorunurResmi) + "\" class=\"img-thumbnail\" style=\"width: 100px; height: 100px; margin-bottom: 20px;\" />")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BeklemeDurumu)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.YazıldıgıTarih)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+            @if (item.AppUser.UserName == User.Identity.Name)
+            {
+                <tr>
+                    <td class="Body-duzelt">
+                        @Html.Raw(HttpUtility.HtmlDecode(item.Location))
+                        @*@Html.DisplayFor(modelItem => item.Location)*@
+                    </td>
+                    <td>
+                        @Html.Raw("<img src=\"data:image/jpeg;base64," + Convert.ToBase64String(item.GorunurResmi) + "\" class=\"img-thumbnail\" style=\"width: 100px; height: 100px; margin-bottom: 20px;\" />")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BeklemeDurumu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YazıldıgıTarih)
+                    </td>
+                    <td>
+                        @foreach (var a in item.Kategori)
+                        {
+                            @a.KategoriIsmi
+                            <br />
+                        }
+                    </td>
+                    <td>
+                        @foreach (var a in item.Tag)
+                        {
+
+                            @a.TagName;
+                            <br />
+
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+
         }
     </tbody>
 </table>

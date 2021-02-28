@@ -12,7 +12,7 @@ namespace Entities.Concrete
         public byte[] GorunurResmi { get; set; }
         public string BeklemeDurumu { get; set; }
         public DateTime YazıldıgıTarih { get; set; }
-        public AppUser AppUser { get; set; }
+        public AppUser AppUser { get; set; } 
         public int AppUserId { get; set; }
         public ICollection<YaziKategori> YaziKategoris { get; set; } = new List<YaziKategori>();
         public ICollection<YaziTag> YaziTags{ get; set; } = new List<YaziTag>();
