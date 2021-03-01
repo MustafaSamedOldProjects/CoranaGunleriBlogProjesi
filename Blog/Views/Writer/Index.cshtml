@@ -7,7 +7,7 @@
     <thead>
         <tr>
             <th>
-                Body
+                @Html.DisplayNameFor(model => model.Baslik)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.GorunurResmi)
@@ -36,7 +36,8 @@
             {
                 <tr>
                     <td class="Body-duzelt">
-                        @Html.Raw(HttpUtility.HtmlDecode(item.Location))
+                        @*@Html.Raw(HttpUtility.HtmlDecode(item.Location))*@
+                        @Html.Raw(HttpUtility.HtmlDecode(item.Baslik))
                         @*@Html.DisplayFor(modelItem => item.Location)*@
                     </td>
                     <td>
@@ -58,10 +59,8 @@
                     <td>
                         @foreach (var a in item.Tag)
                         {
-
                             @a.TagName;
                             <br />
-
                         }
                     </td>
                     <td>

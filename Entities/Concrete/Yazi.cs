@@ -8,6 +8,7 @@ namespace Entities.Concrete
     public class Yazi : ITablo
     {
         public int Id { get; set; }
+        public string Baslik { get; set; }
         public string Location { get; set; }
         public byte[] GorunurResmi { get; set; }
         public string BeklemeDurumu { get; set; }

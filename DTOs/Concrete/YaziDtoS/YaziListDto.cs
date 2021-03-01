@@ -8,6 +8,7 @@ namespace DTOs.Concrete.YaziDtoS
     public class YaziListDto
     {
         public int Id { get; set; }
+        public string Baslik { get; set; }
         public string Location { get; set; }
         public  byte[] GorunurResmi;
         //public byte[] GorunurResmi { get; set; }

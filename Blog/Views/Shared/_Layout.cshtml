@@ -7,7 +7,7 @@
     <link href="~/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
+    <div >
         <a asp-action="AnaSayfa">AnaSayfa</a>
         <a asp-action="Index" asp-controller="Yazis">Yazis</a>
 
@@ -34,7 +34,7 @@
         }
         @if (signinmanager.IsSignedIn(User) && (User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString())))
         {
-            <a asp-action="Index" asp-controller="Moderator">Moeratörlükd</a>
+            <a asp-action="Index" asp-controller="Moderator">Moeratörlük</a>
         }
         @if (signinmanager.IsSignedIn(User) && User.IsInRole(RoleNames.Admin.ToString()))
         {
@@ -45,7 +45,11 @@
             <a asp-controller="Home" asp-action="LogOut">LogOut</a>
         }
     </div>
-    @RenderBody()
+    <div class="row ">
+        <div class="col-12 text-center">
+            @RenderBody()
+        </div>
+    </div>
     <script src="~/jquery/jquery.min.js"></script>
     <script src="~/twitter-bootstrap/js/bootstrap.min.js"></script>
     <script src="~/jquery-validate/jquery.validate.min.js"></script>

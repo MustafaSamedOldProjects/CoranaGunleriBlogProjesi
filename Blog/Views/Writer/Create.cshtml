@@ -19,6 +19,11 @@
                 </div>
             </div>
             <div class="form-group">
+                <label asp-for="Baslik" class="control-label"></label>
+                <input type="text" asp-for="Baslik" class="form-control" />
+                <span asp-validation-for="Baslik" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Body" class="control-label"></label>
                 @*<input asp-for="Resim" id="Resim" type="file" name="Resim" style="display: none;" onchange="" />*@
                 <textarea asp-for="Body" id="myTextarea"></textarea>
@@ -35,30 +40,30 @@
                 <span asp-validation-for="Tags" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                    <label asp-for="Tags" class="control-label"></label>
-                    <select size="2" id="selectlist-tag" size="3" class="form-control" multiple asp-for="Tags">
-                        @foreach (var item in Model.Tags)
-                        {
-                            <option name="TagId"
-                                    value="
+            <label asp-for="Tags" class="control-label"></label>
+            <select size="2" id="selectlist-tag" size="3" class="form-control" multiple asp-for="Tags">
+                @foreach (var item in Model.Tags)
+                {
+                    <option name="TagId"
+                            value="
 
 
-                                        @{Tag İST =  new Tag()
-                                                {
-                                                    TagName = item.TagName,
-                                                    Id = item.Id
-                                                }
-                                          };
-                                        @İST.ToString();
-                                    "
-                                    @(İST)
-                               >
-                   @item.TagName</option>
-                        }
-                    </select>
+                                @{Tag İST =  new Tag()
+                                        {
+                                            TagName = item.TagName,
+                                            Id = item.Id
+                                        }
+                                  };
+                                @İST.ToString();
+                            "
+                            @(İST)
+                       >
+           @item.TagName</option>
+                }
+            </select>
 
-                    <span asp-validation-for="Tags" class="text-danger"></span>
-                </div>*@
+            <span asp-validation-for="Tags" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <label asp-for="KategoriId" class="control-label"></label>
                 <select multiple id="selectlist-kategori" size="3" class="form-control" asp-for="KategoriId" asp-items="Model.Kategoris.Select(a =>  new SelectListItem {
@@ -68,16 +73,16 @@
                 <span asp-validation-for="Kategoris" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                    <label asp-for="Kategoris" class="control-label"></label>
-                    <select size="2" id="selectlist-tag" size="3" class="form-control" multiple asp-for="Kategoris">
-                        @foreach (var item in Model.Kategoris)
-                        {
-                            <option name="KategoriId" value="@item.Id">@item.KategoriIsmi</option>
-                        }
-                    </select>
+            <label asp-for="Kategoris" class="control-label"></label>
+            <select size="2" id="selectlist-tag" size="3" class="form-control" multiple asp-for="Kategoris">
+                @foreach (var item in Model.Kategoris)
+                {
+                    <option name="KategoriId" value="@item.Id">@item.KategoriIsmi</option>
+                }
+            </select>
 
-                    <span asp-validation-for="Tags" class="text-danger"></span>
-                </div>*@
+            <span asp-validation-for="Tags" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

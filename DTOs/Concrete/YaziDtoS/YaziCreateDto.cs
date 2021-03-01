@@ -8,6 +8,7 @@ namespace DTOs.Concrete.YaziDtoS
 {
     public class YaziCreateDto
     {
+        public string Baslik { get; set; }
         public byte[] GorunurResmi { get; set; }
         public string Body { get; set; }
         public ICollection<Tag> Tags { get; set; } = new List<Tag>();

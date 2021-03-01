@@ -69,6 +69,7 @@ namespace Blog.Controllers
 
                 list.Add(new YaziListDto()
                 {
+                    Baslik = item.Baslik,
                     AppUser = _userManager.FindByIdAsync(item.AppUserId.ToString()).Result,
                     AppUserId = item.AppUserId,
                     BeklemeDurumu = item.BeklemeDurumu,
@@ -168,6 +169,7 @@ namespace Blog.Controllers
                     System.IO.File.WriteAllText(fullPath,yaziCreateDto.Body);
                     var yazi = new Yazi()
                     {
+                        Baslik = yaziCreateDto.Baslik,
                         AppUserId = user.Id,
                         BeklemeDurumu = OnayDurumlari.OnayBekliyor.ToString(),
                         YaziKategoris = yazikategoris,
