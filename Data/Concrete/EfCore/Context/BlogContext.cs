@@ -39,8 +39,5 @@ namespace Data.Concrete.EfCore.Context
         public DbSet<YaziTag> YaziTags { get; set; }
         public DbSet<YaziYorum> YaziYorums { get; set; }
         public DbSet<Yorum> Yorums { get; set; }
-        //public DbSet<YaziCreateDto> YaziCreateDtos { get; set; } //silinecek
-        //public DbSet<YaziListDto> YaziListDtos { get; set; } //silinecek
-
     }
 }

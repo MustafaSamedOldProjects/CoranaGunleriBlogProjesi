@@ -1,12 +1,15 @@
-﻿<style >
-img {
+﻿img {
     height: auto;
     max-width: 100%;
 }
-
+.Responsive {
+    max-width: 100%;
+    display: flex;
+}
 .img-responsive {
-    height: auto;
-    max-width: 100%;
+    width: 25vw !important;
 }
 
-</style >
+.sag-img-responsive {
+    width: 50%;
+}

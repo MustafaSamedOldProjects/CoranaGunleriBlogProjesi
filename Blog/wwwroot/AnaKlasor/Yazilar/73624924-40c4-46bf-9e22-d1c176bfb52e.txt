@@ -1,0 +1,4 @@
+<p><span style="background-color: #e03e2d;">Mehmet T&uuml;rkiyedeki En iyi Haxballcudur.</span></p>
+<div id="gtx-trans" style="position: absolute; left: -13px; top: -12.009px;">
+<div class="gtx-trans-icon">&nbsp;</div>
+</div>

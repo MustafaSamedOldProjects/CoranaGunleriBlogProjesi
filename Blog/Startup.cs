@@ -52,6 +52,7 @@ namespace Blog
             services.AddTransient<Tag>();
             services.AddHttpContextAccessor();
             services.AddControllersWithViews().AddFluentValidation();
+            services.AddDirectoryBrowser();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(RoleNames.Admin.ToString(),
@@ -109,6 +110,7 @@ namespace Blog
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+           
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
@@ -121,6 +123,7 @@ namespace Blog
                         Path.Combine(env.ContentRootPath, "wwwroot/AnaKlasor/Yazilar")),
                 RequestPath = "/wwwroot/AnaKlasor/Yazilar"
             });
+           
             app.UseRouting();
 
             app.UseAuthentication();

@@ -35,7 +35,8 @@ namespace Data.Concrete.EfCore.Repositories
         public async  Task<T> GetById(int id)
         {
             using BlogContext context = new BlogContext();
-            return await context.Set<T>().FindAsync(id);
+            var deger = await context.Set<T>().FindAsync(id);
+            return deger;
         }
 
         public async  Task<T> GetLastId(T item)

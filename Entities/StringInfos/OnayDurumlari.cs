@@ -9,6 +9,7 @@ namespace Entities.StringInfos
         OnayBekliyor,
         Onaylandı,
         Onaylanmadi,
-        Silindi
+        Silindi,
+        Degistirildi
     }
 }

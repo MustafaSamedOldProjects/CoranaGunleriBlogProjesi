@@ -34,7 +34,8 @@ namespace Bussiness.Concrete
 
         public async Task<T> GetById(int id)
         {
-             return await _genericDal.GetById(id);
+             var deger =  await _genericDal.GetById(id);
+            return deger;
         }
 
         public async Task<T> GetLastId(T item)

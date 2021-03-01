@@ -77,8 +77,8 @@ namespace Blog.Controllers
                     YazıldıgıTarih = item.YazıldıgıTarih,
                     Kategori = _yaziService.GetYaziKategoris(item.Id).Result,
                     Tag = _tagService.GetirTagsByYaziId(item.Id).Result,
-                    GorunurResmi =item.GorunurResmi
-
+                    GorunurResmi =item.GorunurResmi,
+                    Id = item.Id
                 });
             }
             return View(list);
@@ -224,6 +224,135 @@ namespace Blog.Controllers
             }
             return Json("Yüklendi");
 
+        }
+        [HttpGet("id")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var yazi =  _yaziService.GetById(id).Result;
+            var kategoris = await _yaziService.GetYaziKategoris(id);
+            List<int> kategorids = new List<int>();
+            foreach (var item in kategoris)
+            {
+                kategorids.Add(item.Id);
+            }
+            var tags = _tagService.GetirTagsByYaziId(id).Result;
+            List<int> tagids = new List<int>();
+            foreach (var item in tags)
+            {
+                tagids.Add(item.Id);
+            }
+
+            var path = _webHostEnvironment.ContentRootPath ;
+            var path2 = yazi.Location;
+            var body = System.IO.File.ReadAllText(path + path2);
+            var YazıUpdateDto = new YazıUpdateDto()
+            {
+                Id = id,
+                Baslik = yazi.Baslik,
+                GorunurResmi = yazi.GorunurResmi,
+                KategoriId = kategorids.ToArray(),
+                Kategoris = _kategoriService.GetAll().Result,
+                TagId = tagids.ToArray(),
+                Tags = _tagService.GetAll().Result,
+                Body = body
+            };
+            return View(YazıUpdateDto);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromForm] YazıUpdateDto yazıUpdateDto)
+        {
+            if (ModelState.IsValid)
+            {
+                // eski yazı değiştirildi moduna alınacak değiştirildi klasörüne alınacak.
+                // eski yazının bilgileri lognacak.
+                // yeni yazi update edilecek eski yazının yerini alacak.
+
+
+                var yazigetir =  await _yaziService.GetById(yazıUpdateDto.Id);
+                string degisYazi = yazigetir.Id + Environment.NewLine + yazigetir.BeklemeDurumu + Environment.NewLine + yazigetir.AppUserId + Environment.NewLine + yazigetir.Baslik + Environment.NewLine + yazigetir.AppUser + Environment.NewLine + yazigetir.YazıldıgıTarih + Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine;
+                var lp = System.IO.File.ReadAllText(_webHostEnvironment.ContentRootPath+yazigetir.Location);
+
+                degisYazi += lp;
+                int versiyon = 0;
+                for (int i = 0; i < 250; i++)
+                {
+                    if (System.IO.File.Exists(yazigetir.Location+i))
+                    {
+                        versiyon = i+1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                System.IO.File.WriteAllText(_webHostEnvironment.ContentRootPath+yazigetir.Location +versiyon, degisYazi);
+
+
+
+
+                var yazikategoris = new List<YaziKategori>();
+                foreach (var item in yazıUpdateDto.KategoriId)
+                {
+                    yazikategoris.Add(new YaziKategori()
+                    {
+                        KategoriId = item
+                    });
+                }
+
+                var tags = new List<YaziTag>();
+                foreach (var item in yazıUpdateDto.TagId)
+                {
+                    tags.Add(new YaziTag()
+                    {
+                        TagId = item
+                    });
+                }
+
+
+
+                var yazi = new Yazi()
+                {
+                    Id = yazıUpdateDto.Id,
+                    YaziKategoris = yazikategoris,
+                    YaziTags = tags,
+                    Baslik = yazıUpdateDto.Baslik,
+                    GorunurResmi = yazıUpdateDto.GorunurResmi,
+                    Location = yazigetir.Location,
+                    BeklemeDurumu = yazigetir.BeklemeDurumu,
+                    YazıldıgıTarih = DateTime.Now
+                };
+                await _yaziService.Update(yazi);
+
+                return View("Index");
+            }
+            //var yazi = await _yaziService.GetById(id);
+            //var kategoris = await _yaziService.GetYaziKategoris(id);
+            //List<int> kategorids = new List<int>();
+            //foreach (var item in kategoris)
+            //{
+            //    kategorids.Add(item.Id);
+            //}
+            //var tags = _tagService.GetirTagsByYaziId(id).Result;
+            //List<int> tagids = new List<int>();
+            //foreach (var item in tags)
+            //{
+            //    tagids.Add(item.Id);
+            //}
+
+            //var body = System.IO.File.ReadAllText(yazi.Location);
+            //var YazıUpdateDto = new YazıUpdateDto()
+            //{
+            //    Id = id,
+            //    Baslik = yazi.Baslik,
+            //    GorunurResmi = yazi.GorunurResmi,
+            //    KategoriId = kategorids.ToArray(),
+            //    Kategoris = kategoris,
+            //    TagId = tagids.ToArray(),
+            //    Tags = tags,
+            //    Body = body
+            //};
+
+            return View(yazıUpdateDto);
         }
     }
 }

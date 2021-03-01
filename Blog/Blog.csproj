@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\AnaKlasor\Degistir\" />
     <Folder Include="wwwroot\AnaKlasor\Resimler\" />
     <Folder Include="wwwroot\AnaKlasor\Yazilar\" />
   </ItemGroup>

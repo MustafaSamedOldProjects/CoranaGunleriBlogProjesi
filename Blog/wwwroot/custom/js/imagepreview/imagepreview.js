@@ -23,14 +23,14 @@ function updateImageDisplay() {
             const listItem = document.createElement('li');
             const para = document.createElement('p');
             if (validFileType(file)) {
-                para.textContent = `File name ${file.name}, file size ${returnFileSize(file.size)}.`;
+                para.textContent = `File name ${file.name.substring(0, 10)}, file size ${returnFileSize(file.size)}.`;
                 const image = document.createElement('img');
                 image.src = URL.createObjectURL(file);
 
                 listItem.appendChild(image);
                 listItem.appendChild(para);
             } else {
-                para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
+                para.textContent = `File name ${file.name.substring(0,10)}: Not a valid file type. Update your selection.`;
                 listItem.appendChild(para);
             }
 
