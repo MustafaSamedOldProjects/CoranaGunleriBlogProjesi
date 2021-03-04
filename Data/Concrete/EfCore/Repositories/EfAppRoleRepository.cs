@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Data.Concrete.EfCore.Repositories
 {
-    public class EfAppRoleRepositor :IAppRoleDal
+    public class EfAppRoleRepository :IAppRoleDal
     {
         public async Task<AppRole> GetAdminRole()
         {

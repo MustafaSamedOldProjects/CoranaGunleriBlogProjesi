@@ -1,5 +1,6 @@
 using Blog.Seed;
 using Bussiness.CustomIoCContainer.MicrosoftIoCContainer;
+using Bussiness.Interfaces;
 using Data.Concrete.EfCore.Context;
 using Entities.Concrete;
 using Entities.StringInfos;
@@ -96,7 +97,7 @@ namespace Blog
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IKategoriService kategoriService, ITagService tagService)
         {
             if (env.IsDevelopment())
             {
@@ -110,7 +111,7 @@ namespace Blog
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-           
+            Seeding.SeedData(userManager, roleManager,kategoriService, tagService).Wait();
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
@@ -128,7 +129,6 @@ namespace Blog
 
             app.UseAuthentication();
             app.UseAuthorization();
-            Seeding.SeedData(userManager, roleManager).Wait();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

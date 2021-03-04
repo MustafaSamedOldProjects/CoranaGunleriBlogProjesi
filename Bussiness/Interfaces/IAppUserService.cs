@@ -12,5 +12,6 @@ namespace Bussiness.Interfaces
         Task<List<AppUser>> GetModerators();
         Task<List<AppUser>> GetValidators();
         Task<List<AppUser>> GetWriters();
+        Task<List<AppUser>> GetUsersByYaziId(int id);
     }
 }

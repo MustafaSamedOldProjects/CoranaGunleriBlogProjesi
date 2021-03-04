@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Bussiness.Interfaces;
+using Entities.Concrete;
 using Entities.StringInfos;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -10,7 +11,7 @@ namespace Blog.Seed
 {
     public static class Seeding
     {
-        public static async Task SeedData(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        public static async Task SeedData(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IKategoriService kategoriService, ITagService tagService)
         {
             var adminRole = await roleManager.FindByNameAsync(RoleNames.Admin.ToString()) ;
             if (adminRole == null)
@@ -49,6 +50,50 @@ namespace Blog.Seed
                 };
                 await userManager.CreateAsync(user, "mustafa");
                 await userManager.AddToRoleAsync(user, RoleNames.Admin.ToString());
+            }
+            var kategoriler = kategoriService.GetAll();
+            if (kategoriler.Result.Count < 1)
+            {
+                await kategoriService.Add(new Kategori()
+                {
+
+                    KategoriIsmi = "Hakkımda"
+                });
+                await kategoriService.Add(new Kategori()
+                {
+
+                    KategoriIsmi = "İletisim"
+                });
+                await kategoriService.Add(new Kategori()
+                {
+
+                    KategoriIsmi = "Karalamalar"
+                });
+            }
+            var tagler = tagService.GetAll();
+            if (tagler.Result.Count < 1)
+            {
+                await tagService.Add(new Tag()
+                {
+
+                    TagName = "Duygusal",
+                    //AppUser = userManager.FindByNameAsync("mustafa").Result,
+                    AppUserId = userManager.FindByNameAsync("mustafa").Result.Id
+                }); ;
+                await tagService.Add(new Tag()
+                {
+                    //AppUser = userManager.FindByNameAsync("mustafa").Result,
+                    TagName = "Yenilikçi",
+                    AppUserId = userManager.FindByNameAsync("mustafa").Result.Id
+
+                });
+                await tagService.Add(new Tag()
+                {
+                    //AppUser = userManager.FindByNameAsync("mustafa").Result,
+                    TagName = "İşe yarar",
+                    AppUserId = userManager.FindByNameAsync("mustafa").Result.Id
+
+                });
             }
         }
     }

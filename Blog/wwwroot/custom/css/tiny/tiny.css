@@ -13,3 +13,9 @@
 .sag-img-responsive {
     width: 50%;
 }
+.va-md {
+    vertical-align: middle;
+}
+.full-img-responsive {
+    vertical-align: middle;
+}

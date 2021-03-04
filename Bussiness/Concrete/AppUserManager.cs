@@ -32,6 +32,11 @@ namespace Bussiness.Concrete
 
         }
 
+        public async Task<List<AppUser>> GetUsersByYaziId(int id )
+        {
+            return await _appUserDal.GetUsersByYaziId(id);
+        }
+
         public async Task<List<AppUser>> GetValidators()
         {
             return await _appUserDal.GetValidators();

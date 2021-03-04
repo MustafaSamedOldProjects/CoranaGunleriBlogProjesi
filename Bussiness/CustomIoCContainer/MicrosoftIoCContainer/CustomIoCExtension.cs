@@ -41,6 +41,12 @@ namespace Bussiness.CustomIoCContainer.MicrosoftIoCContainer
 
             services.AddScoped<IYorumDal, EfYorumRepository>();
             services.AddScoped<IYorumService, YorumManager>();
+
+            services.AddScoped<IAppUserDal, EfAppUserRepository>();
+            services.AddScoped<IAppUserService, AppUserManager>();
+
+            services.AddScoped<IAppRoleDal, EfAppRoleRepository>();
+            services.AddScoped<IAppRoleService, AppRoleManager>();
             #endregion
             #region valid
             services.AddTransient<IValidator<YaziCreateDto>,YaziCreateValidator >();

@@ -61,6 +61,19 @@ namespace Data.Concrete.EfCore.Repositories
             }).ToListAsync();
         }
 
+        public async Task<List<AppUser>> GetUsersByYaziId(int id)
+        {
+            using BlogContext context = new BlogContext();
+            return await context.Users.Join(context.Yazis, u => u.Id, y => y.AppUserId, (u, y) => new {
+                u,
+                y
+            }).Where(x => x.y.Id== id).Select(i => new AppUser
+            {
+                UserName = i.u.UserName,
+                Id = i.u.Id
+            }).ToListAsync();
+        }
+
         public async Task<List<AppUser>> GetValidators()
         {
             using BlogContext context = new BlogContext();

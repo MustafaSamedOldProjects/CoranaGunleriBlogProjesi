@@ -13,7 +13,7 @@ namespace Data.Concrete.EfCore.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(LocalDb)\MSSQLLocalDB;Database=Coblog;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-NLFNOIV\SQLEXPRESS;User Id=mustafa;Password=78235;");
             base.OnConfiguring(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder builder)

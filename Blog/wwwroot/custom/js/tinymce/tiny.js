@@ -61,12 +61,5 @@
         remove_script_host: false,
         convert_urls: true,
 
-        image_dimensions: true,
-        image_class_list: [
-            { title: 'Responsive', value: 'img-responsive' },
-            { title: 'Sag', value: 'sag-img-responsive' },
-            { title: 'sol', value: 'sol-img-responsive' },
-            { title: 'mobil', value: 'mobil-img-responsive' },
-            { title: 'full', value: 'full-img-responsive' }
-        ]
+        image_dimensions: false,
     });

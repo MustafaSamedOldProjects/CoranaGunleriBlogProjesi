@@ -23,6 +23,7 @@ namespace Blog.Controllers
     public class WriterController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly IAppUserService _appUserService;
         private readonly IYaziService _yaziService;
         private readonly IYaziKategoriService _yaziKategoriService;
         private readonly IYaziYorumService _yaziYorumService;
@@ -35,6 +36,7 @@ namespace Blog.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IHttpContextAccessor _contextAccessor;
         public WriterController(
+            IAppUserService appUserService,
             IYaziService yaziService,
             IYaziKategoriService yaziKategoriService,
             IYaziYorumService yaziYorumService,
@@ -46,6 +48,7 @@ namespace Blog.Controllers
             IHttpContextAccessor contextAccessor,
         IMapper mapper)
         {
+            _appUserService = appUserService;
             _yaziKategoriService = yaziKategoriService;
             _yaziYorumService = yaziYorumService;
             _contextAccessor = contextAccessor;
@@ -353,6 +356,24 @@ namespace Blog.Controllers
             //};
 
             return View(yazıUpdateDto);
+        }
+        [HttpGet("Details/{id}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var yazi = await _yaziService.GetById(id);
+            YaziDetailstDto dto = new YaziDetailstDto()
+            {
+                Baslik = yazi.Baslik,
+                BeklemeDurumu = yazi.BeklemeDurumu,
+                Body = System.IO.File.ReadAllText(_webHostEnvironment.ContentRootPath + yazi.Location),
+                Tag = await _tagService.GetirTagsByYaziId(id),
+                YazıldıgıTarih = yazi.YazıldıgıTarih,
+                Kategori = await _yaziService.GetYaziKategoris(id),
+                Id = yazi.Id,
+                AppUser = await _appUserService.GetUsersByYaziId(id),
+                GorunurResmi = yazi.GorunurResmi
+            };
+            return View(dto);
         }
     }
 }
