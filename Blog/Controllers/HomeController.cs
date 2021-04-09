@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Bussiness.Interfaces;
 using DTOs.Concrete;
+using DTOs.Concrete.YaziDtoS;
 using Entities.Concrete;
 using Entities.StringInfos;
 using Microsoft.AspNetCore.Authorization;
@@ -19,13 +21,19 @@ namespace Blog.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IMapper _mapper;
+        private readonly IYaziService _yaziService;
+        private readonly ITagService _tagService;
+        private readonly IAppUserService _appUserService;
 
-        public HomeController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper)
+        public HomeController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, IYaziService yaziService, ITagService tagService, IAppUserService appUserService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
             _mapper = mapper;
+            _yaziService = yaziService;
+            _tagService = tagService;
+            _appUserService = appUserService;
         }
         public IActionResult Index()
         {
@@ -143,6 +151,33 @@ namespace Blog.Controllers
                 return RedirectToAction("Index", "Member");
             }
             return RedirectToAction("Index");
+        }
+        public IActionResult AnaSayfa()
+        {
+            // buradan kullanıcı isterse tag'e göre , isterse konuya göre, isterse yazara göre arayabilelecek search kutusundan
+            // yazının başlığı,tag'i, konusunu, yazarı görünecek. 
+
+            List<YaziDetailstDto> list = new List<YaziDetailstDto>();
+
+            foreach (var item in _yaziService.GetAll().Result)
+            {
+
+                List<AppUser> users = new List<AppUser>();
+
+                foreach (var us in _appUserService.GetUsersByYaziId(item.Id).Result)
+                {
+                    users.Add(us);
+                }
+                list.Add(new YaziDetailstDto()
+                {
+                    AppUser = users,
+                    Baslik = item.Baslik,
+                    YazıldıgıTarih = item.YazıldıgıTarih,
+                    Kategori = _yaziService.GetYaziKategoris(item.Id).Result,
+                    Tag = _tagService.GetirTagsByYaziId(item.Id).Result,
+                });
+            }
+            return View(list);
         }
     }
 }

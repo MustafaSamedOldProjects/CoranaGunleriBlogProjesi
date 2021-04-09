@@ -22,6 +22,10 @@ namespace Blog.Map
             CreateMap<YaziListDto, Yazi>();
             CreateMap<Yazi, YaziListDto>();
 
+            CreateMap<YaziDetailstDto, Yazi>();
+            CreateMap<Yazi, YaziDetailstDto>();
+
+
             CreateMap<YaziCreateDto, Yazi>();
             CreateMap<Yazi, YaziCreateDto>();
 

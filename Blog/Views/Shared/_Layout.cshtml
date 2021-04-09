@@ -3,26 +3,27 @@
 <html lang="tr">
 <head>
     <title>Layout</title>
+    <meta charset="UTF-8">
     <link href="~/css/CustomGlobal.css" rel="stylesheet" />
     <link href="~/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div >
-        <a asp-action="AnaSayfa">AnaSayfa</a>
-        <a asp-action="Index" asp-controller="Yazis">Yazis</a>
+    <div>
+        <a  style="background-color:sandybrown; display:inline;" asp-controller="Home" asp-action="AnaSayfa">AnaSayfa</a>
+        <a  asp-action="Index" asp-controller="Yazi">Yazis</a>
 
         @if (!signinmanager.IsSignedIn(User))
         {
-            <a asp-action="Index">GirisYap</a>
+            <div style="background-color:sandybrown; display:inline;"><a asp-action="Index">GirisYap</a></div>
         }
         @if (!signinmanager.IsSignedIn(User))
         {
-            <a asp-action="KayitOl">KayitOl</a>
+            <a asp-controller="Home" asp-action="KayitOl">KayitOl</a>
         }
 
         @if (signinmanager.IsSignedIn(User) && (User.IsInRole(RoleNames.Member.ToString()) || User.IsInRole(RoleNames.Writer.ToString()) || User.IsInRole(RoleNames.Validator.ToString()) || User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString())))
         {
-            <a asp-action="Index" asp-controller="Member">Yaziları Oku</a>
+            <div style="background-color:sandybrown; display:inline;"><a asp-action="Index" asp-controller="Member">Yaziları Oku</a></div>
         }
         @if (signinmanager.IsSignedIn(User) && (User.IsInRole(RoleNames.Writer.ToString()) || User.IsInRole(RoleNames.Validator.ToString()) || User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString())))
         {
@@ -30,7 +31,7 @@
         }
         @if (signinmanager.IsSignedIn(User) && (User.IsInRole(RoleNames.Validator.ToString()) || User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString())))
         {
-            <a asp-action="Index" asp-controller="Validator">Yazi Onay</a>
+            <div style="background-color:sandybrown; display:inline;"><a asp-action="Index" asp-controller="Validator">Yazi Onay</a></div>
         }
         @if (signinmanager.IsSignedIn(User) && (User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString())))
         {
@@ -38,7 +39,7 @@
         }
         @if (signinmanager.IsSignedIn(User) && User.IsInRole(RoleNames.Admin.ToString()))
         {
-            <a asp-action="Index" asp-controller="Admin">Admin</a>
+            <div style="background-color:sandybrown; display:inline;"><a asp-action="Index" asp-controller="Admin">Admin</a></div>
         }
         @if (signinmanager.IsSignedIn(User))
         {

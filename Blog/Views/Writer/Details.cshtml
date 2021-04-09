@@ -1,8 +1,9 @@
-﻿@model YaziDetailstDto
+﻿@inject SignInManager<AppUser> signinmanager;
+@model YaziDetailstDto
 
 
 <!DOCTYPE html>
-
+<link href="~/custom/css/details/dd.css" rel="stylesheet" />
 
 <div>
     <h4>Yazi</h4>
@@ -13,34 +14,48 @@
         </dt>
         <dd class="col-sm-10">
             @Html.Raw(HttpUtility.HtmlDecode(Model.Baslik))
-          @*  @Html.DisplayFor(model => model.Baslik)*@
+            @*  @Html.DisplayFor(model => model.Baslik)*@
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.GorunurResmi)
         </dt>
         <dd class="col-sm-10">
             @Html.Raw("<img src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.GorunurResmi) + "\" class=\"img-thumbnail\" style=\"width: 100px; height: 100px; margin-bottom: 20px;\" />")
-           @* @Html.DisplayFor(model => model.GorunurResmi)*@
+            @* @Html.DisplayFor(model => model.GorunurResmi)*@
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BeklemeDurumu)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BeklemeDurumu)
-        </dd>
+        @if ( User.IsInRole(RoleNames.Writer.ToString()) || User.IsInRole(RoleNames.Validator.ToString()) || User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString()))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.BeklemeDurumu)
+            </dt>
+        }
+        @if ( User.IsInRole(RoleNames.Writer.ToString()) || User.IsInRole(RoleNames.Validator.ToString()) || User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString()))
+        {
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.BeklemeDurumu)
+            </dd>
+        }
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Body)
         </dt>
         <dd class="col-sm-10">
-            @Html.Raw(HttpUtility.HtmlDecode(Model.Baslik))
+            @Html.Raw(HttpUtility.HtmlDecode(Model.Body))
             @*@Html.DisplayFor(model => model.Body)*@
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
+        @if ( User.IsInRole(RoleNames.Writer.ToString()) || User.IsInRole(RoleNames.Validator.ToString()) || User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString()))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+        }
+        @if ( User.IsInRole(RoleNames.Writer.ToString()) || User.IsInRole(RoleNames.Validator.ToString()) || User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString()))
+        {
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+        }
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.YazıldıgıTarih)
         </dt>
@@ -51,6 +66,11 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if ( User.IsInRole(RoleNames.Writer.ToString()) || User.IsInRole(RoleNames.Validator.ToString()) || User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString()))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        
+        <a asp-action="Index">Back to List</a>
+    }
+
 </div>
