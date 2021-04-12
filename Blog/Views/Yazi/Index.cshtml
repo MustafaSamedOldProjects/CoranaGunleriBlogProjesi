@@ -5,6 +5,7 @@
 {
     @if (item.BeklemeDurumu == "Onaylandı")
     {
+    
         <div class="card" style="width: 18rem;">
             @Html.Raw("<img class=\"card - img - top\" src=\"data:image/jpeg;base64," + Convert.ToBase64String(item.GorunurResmi) + "\" class=\"img-thumbnail\"  />")
 

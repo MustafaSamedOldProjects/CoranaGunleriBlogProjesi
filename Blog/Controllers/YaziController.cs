@@ -25,11 +25,16 @@ namespace Blog.Controllers
             if (_yaziService.GetAll().Result.Count>1)
             {
                 a = _mapper.Map<List<YaziListDto>>(_yaziService.GetAll().Result);
-
+                
             }
             else
             {
-                a = null;
+                a = new List<YaziListDto>() { 
+                new YaziListDto(){ 
+                    Baslik = "İlk yazınızı yazdığınızda bu mesaj kalkacaktır.",
+                    BeklemeDurumu = "İlk yazınızı yazdığınızda bu mesaj kalkacaktır."
+                }
+                };
             }
             return View(a);
         }

@@ -49,5 +49,10 @@ namespace Bussiness.Concrete
         {
             return await _yaziDal.GetYaziSahipUsers();
         }
+
+        public async Task Onaylar(int id)
+        {
+            await _yaziDal.Onaylar(id);
+        }
     }
 }

@@ -23,24 +23,27 @@
         </tr>
         @foreach (var item in Model)
         {
-            <tr>
+            if (item.BeklemeDurumu == "Onaylandı")
+            {
+                <tr>
+                    <td><a asp-controller="Writer" asp-action="Details" asp-route-id="@item.Id">@item.Baslik</a></td>
+                    @foreach (var item2 in item.AppUser)
+                    {
+                        <td>@item2.UserName</td>
+                    }
 
-                <td>@item.Baslik</td>
-                @foreach (var item2 in item.AppUser)
-                {
-                <td>@item2.UserName</td>
-                }
+                    @foreach (var item3 in item.Tag)
+                    {
+                        <td>@item3.TagName</td>
+                    }
+                    @foreach (var item4 in item.Kategori)
+                    {
+                        <td>@item4.KategoriIsmi</td>
+                    }
+                    <td>@item.YazıldıgıTarih</td>
+                </tr>
+            }
 
-                @foreach (var item3 in item.Tag)
-                {
-                <td>@item3.TagName</td>
-                }
-                @foreach (var item4 in item.Kategori)
-                {
-                <td>@item4.KategoriIsmi</td>
-                }
-                <td>@item.YazıldıgıTarih</td>
-            </tr>
         }
 
     </table>

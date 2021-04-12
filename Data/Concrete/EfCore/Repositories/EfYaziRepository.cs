@@ -90,5 +90,13 @@ namespace Data.Concrete.EfCore.Repositories
                 YaziKategoris = i.k.YaziKategoris
             }).ToListAsync();
         }
+
+        public async Task Onaylar(int id)
+        {
+            using BlogContext context = new BlogContext();
+            var onaysiz =  context.Yazis.Where(İ => İ.Id == id).FirstOrDefault();
+            onaysiz.BeklemeDurumu = OnayDurumlari.Onaylandı.ToString();
+            await context.SaveChangesAsync();
+        }
     }
 }

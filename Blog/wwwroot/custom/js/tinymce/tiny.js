@@ -24,10 +24,12 @@
                     input.click();
                     input.onchange = function () {
                         var file = input.files[0];
+                        var yol = "\wwwroot\AnaKlasor\Yazilar" + file.name;
                         var reader = new FileReader();
                         reader.onload = function (e) {
                             callback(e.target.result, {
-                                alt: file.name
+                                alt: file.name,
+                                src: yol
                             });
                         };
                         reader.readAsDataURL(file);
@@ -59,7 +61,7 @@
         relative_urls: true,
             document_base_url: 'https://localhost:44361/',
         remove_script_host: false,
-        convert_urls: true,
+        convert_urls: false,
 
         image_dimensions: false,
     });

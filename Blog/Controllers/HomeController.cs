@@ -155,15 +155,11 @@ namespace Blog.Controllers
         public IActionResult AnaSayfa()
         {
             // buradan kullanıcı isterse tag'e göre , isterse konuya göre, isterse yazara göre arayabilelecek search kutusundan
-            // yazının başlığı,tag'i, konusunu, yazarı görünecek. 
-
+            // yazının başlığı,tag'i, konusunu, yazarı görünecek.
             List<YaziDetailstDto> list = new List<YaziDetailstDto>();
-
             foreach (var item in _yaziService.GetAll().Result)
             {
-
                 List<AppUser> users = new List<AppUser>();
-
                 foreach (var us in _appUserService.GetUsersByYaziId(item.Id).Result)
                 {
                     users.Add(us);
@@ -175,6 +171,8 @@ namespace Blog.Controllers
                     YazıldıgıTarih = item.YazıldıgıTarih,
                     Kategori = _yaziService.GetYaziKategoris(item.Id).Result,
                     Tag = _tagService.GetirTagsByYaziId(item.Id).Result,
+                    BeklemeDurumu = item.BeklemeDurumu,
+                    Id = item.Id
                 });
             }
             return View(list);

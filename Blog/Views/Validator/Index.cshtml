@@ -1,0 +1,79 @@
+﻿@model List<YaziDetailstDto>
+<link href="~/custom/css/AnaSayfa/table.css" rel="stylesheet" />
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for what you want..">
+<div style="display:inline-flex; align-items:baseline; justify-content:center;">
+
+    <input name="ayni" style="display:inline;" onclick="sec(0)" type="radio">
+    <label style="display:inline;" for="ayni">Baslik</label><br>
+    <input name="ayni" style="display:inline;" onclick="sec(1)" type="radio">
+    <label style="display:inline;" for="ayni">AppUser</label><br>
+    <input name="ayni" style="display:inline;" onclick="sec(2)" type="radio">
+    <label style="display:inline;" for="ayni">Tag</label>
+    <input name="ayni" style="display:inline;" onclick="sec(3)" type="radio">
+    <label style="display:inline;" for="ayni">Kategori</label>
+
+</div>
+<table id="myTable">
+    <tr class="header">
+        <th>Baslik</th>
+        <th>AppUser</th>
+        <th>Tag</th>
+        <th>Kategori</th>
+        <th>YazıldıgıTarih</th>
+        <th>Validate</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        if (!(item.BeklemeDurumu == "Onaylandı"))
+        {
+            <tr>
+                <td><a asp-controller="Writer" asp-action="Details" asp-route-id="@item.Id">@item.Baslik</a></td>
+                @foreach (var item2 in item.AppUser)
+                {
+                    <td>@item2.UserName</td>
+                }
+
+                @foreach (var item3 in item.Tag)
+                {
+                    <td>@item3.TagName</td>
+                }
+                @foreach (var item4 in item.Kategori)
+                {
+                    <td>@item4.KategoriIsmi</td>
+                }
+                <td>@item.YazıldıgıTarih</td>
+                <td><form action="Onayla" method="post"><button formmethod="post" formaction="\Validator\Onayla\@item.Id" type="submit" >Onayla</button></form></td>
+            </tr>
+        }
+    }
+</table>
+<script>
+    var a = 0;
+
+    function sec(x) {
+        a = x;
+    }
+
+
+
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[a];
+            console.log(td);
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+@*<link href="~/custom/js/AnaSayfa/tableSearch.js" rel="stylesheet" />*@
