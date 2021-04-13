@@ -22,30 +22,32 @@
         <th>YazıldıgıTarih</th>
         <th>Validate</th>
         <th>NoValidate</th>
+        <th>Delete</th>
     </tr>
     @foreach (var item in Model)
     {
-        if (!(item.BeklemeDurumu == "Onaylandı" || item.BeklemeDurumu == "Onaylanmadi"))
+        if (item.BeklemeDurumu == "Onaylanmadi")
         {
-            <tr>
-                <td><a asp-controller="Writer" asp-action="Details" asp-route-id="@item.Id">@item.Baslik</a></td>
-                @foreach (var item2 in item.AppUser)
-                {
-                    <td>@item2.UserName</td>
-                }
+<tr>
+    <td><a asp-controller="Writer" asp-action="Details" asp-route-id="@item.Id">@item.Baslik</a></td>
+    @foreach (var item2 in item.AppUser)
+    {
+        <td>@item2.UserName</td>
+    }
 
-                @foreach (var item3 in item.Tag)
-                {
-                    <td>@item3.TagName</td>
-                }
-                @foreach (var item4 in item.Kategori)
-                {
-                    <td>@item4.KategoriIsmi</td>
-                }
-                <td>@item.YazıldıgıTarih</td>
-                <td><form action="Onayla" method="post"><button formmethod="post" formaction="\Validator\Onayla\@item.Id" type="submit" >Onayla</button></form></td>
-                <td><form action="Onaylama" method="post"><button formmethod="post" formaction="\Validator\Onaylama\@item.Id" type="submit">Onaylama</button></form></td>
-            </tr>
+    @foreach (var item3 in item.Tag)
+    {
+        <td>@item3.TagName</td>
+    }
+    @foreach (var item4 in item.Kategori)
+    {
+        <td>@item4.KategoriIsmi</td>
+    }
+    <td>@item.YazıldıgıTarih</td>
+    <td><form action="Onayla" method="post"><button formmethod="post" formaction="\Validator\Onayla\@item.Id" type="submit">Onayla</button></form></td>
+    <td><form action="Onaylama" method="post"><button formmethod="post" formaction="\Validator\Onaylama\@item.Id" type="submit">Onaylama</button></form></td>
+    <td><form action="Delete" method="post"><button formmethod="post" formaction="\Admin\Delete\@item.Id" type="submit">Delete</button></form></td>
+</tr>
         }
     }
 </table>

@@ -1,0 +1,19 @@
+<p>fg</p>
+<p style="text-align: left;">gfd</p>
+<p style="text-align: left;">gfd</p>
+<p>gfd</p>
+<p>gfd</p>
+<p>dgf</p>
+<p>fgd</p>
+<p>dgf</p>
+<p>fdg</p>
+<p>gfdgfd</p>
+<p>df</p>
+<p>dfg</p>
+<p>df</p>
+<p>&nbsp;</p>
+<p>fd</p>
+<p>&nbsp;</p>
+<div id="gtx-trans" style="position: absolute; left: -13px; top: 26px;">
+<div class="gtx-trans-icon">&nbsp;</div>
+</div>

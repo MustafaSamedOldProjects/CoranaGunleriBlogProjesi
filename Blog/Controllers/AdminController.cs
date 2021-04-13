@@ -11,16 +11,21 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
-    [Authorize(Roles = "Admin,Moderator,Validator")]
-    public class ValidatorController : Controller
+
+    [Authorize(Roles = "Admin")]
+
+    public class AdminController : Controller
     {
+        //1: KULLANICIARA ROLLER ATAYABİLECEK.
         private readonly IMapper _mapper;
         private readonly IYaziService _yaziService;
         private readonly ITagService _tagService;
         private readonly IAppUserService _appUserService;
+        private readonly IGenericService<Yazi> _genericService;
 
-        public ValidatorController(IMapper mapper, IYaziService yaziService, ITagService tagService, IAppUserService appUserService)
+        public AdminController(IMapper mapper, IYaziService yaziService, ITagService tagService, IAppUserService appUserService, IGenericService<Yazi> genericService)
         {
+            _genericService = genericService;
             _mapper = mapper;
             _yaziService = yaziService;
             _tagService = tagService;
@@ -28,7 +33,17 @@ namespace Blog.Controllers
         }
         public IActionResult Index()
         {
-
+            return View();
+        }
+        public IActionResult RolAta()
+        {
+            /*
+             1: Kullanıcılar listelenecek. Ve Rol ataması yapılabilecek bir drop down menuden.
+             */
+            return View();
+        }
+        public IActionResult Onaylanmayanlar()
+        {
             List<YaziDetailstDto> list = new List<YaziDetailstDto>();
             foreach (var item in _yaziService.GetAll().Result)
             {
@@ -51,23 +66,15 @@ namespace Blog.Controllers
             return View(list);
         }
         [HttpPost]
-        public IActionResult Onayla(int id) 
+        public IActionResult Delete(int id)
         {
-            _yaziService.Onaylar(id);
+            _genericService.Delete(_yaziService.GetById(id).Result);
             return RedirectToAction("Temp");
         }
+        public IActionResult Temp()
+        {
+            return RedirectToAction("Onaylanmayanlar");
 
-        public IActionResult Temp() 
-        { 
-            return RedirectToAction("Index");
-            
-        }
-        //1: FARKLI ONAY DURUMLARI İÇİNDE YAPMAYI UNUTMA MESELA ONAYLANMADI GİBİ VS..
-        [HttpPost]
-        public IActionResult Onaylama(int id)
-        {
-            _yaziService.Onaylama(id);
-            return RedirectToAction("Temp");
         }
     }
 }

@@ -5,16 +5,17 @@
 {
     @if (item.BeklemeDurumu == "Onaylandı")
     {
-    
-        <div class="card" style="width: 18rem;">
-            @Html.Raw("<img class=\"card - img - top\" src=\"data:image/jpeg;base64," + Convert.ToBase64String(item.GorunurResmi) + "\" class=\"img-thumbnail\"  />")
+<div style="display:inline-flex">
+    <div class="card" style="width: 18rem;">
+        @Html.Raw("<img style=\" width:250px; height:250px; \" class=\"card-img-top\" src=\"data:image/jpeg;base64," + Convert.ToBase64String(item.GorunurResmi) + "\" class=\"img-thumbnail\"  />")
 
-            <div class="card-body">
-                <h5 class="card-title">@item.Baslik</h5>
-                <p class="card-text">@item.YazıldıgıTarih,@item.Tag,@item.Kategori</p>
-                <a asp-controller="Writer" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            </div>
+        <div class="card-body">
+            <h5 class="card-title">@item.Baslik</h5>
+            <p class="card-text">@item.YazıldıgıTarih,@item.Tag,@item.Kategori</p>
+            <a asp-controller="Writer" asp-action="Details" asp-route-id="@item.Id">Details</a> |
         </div>
+    </div>
+</div>
     }
 }
 

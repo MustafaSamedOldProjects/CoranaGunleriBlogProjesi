@@ -2,6 +2,7 @@
 using Bussiness.Interfaces;
 using Data.Interfaces;
 using DTOs.Concrete.YaziDtoS;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
+    [Authorize(Roles = "Writer,Admin,Moderator,Validator,Member")]
     public class YaziController : Controller
     {
         private readonly IMapper _mapper;

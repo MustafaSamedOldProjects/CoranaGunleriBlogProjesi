@@ -16,6 +16,7 @@ namespace Data.Interfaces
         Task<List<Kategori>> GetYaziKategoris( int id);
 
         Task Onaylar(int id);
+        Task Onaylama(int id);
 
     }
 }

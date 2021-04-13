@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;

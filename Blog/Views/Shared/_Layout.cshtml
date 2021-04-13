@@ -33,10 +33,10 @@
         {
             <div style="background-color:sandybrown; display:inline;"><a asp-action="Index" asp-controller="Validator">Yazi Onay</a></div>
         }
-        @if (signinmanager.IsSignedIn(User) && (User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString())))
+        @*@if (signinmanager.IsSignedIn(User) && (User.IsInRole(RoleNames.Moderator.ToString()) || User.IsInRole(RoleNames.Admin.ToString())))
         {
-            <a asp-action="Index" asp-controller="Moderator">Moeratörlük</a>
-        }
+            <a asp-action="Index" asp-controller="Moderator">Moderatörlük</a>
+        }*@
         @if (signinmanager.IsSignedIn(User) && User.IsInRole(RoleNames.Admin.ToString()))
         {
             <div style="background-color:sandybrown; display:inline;"><a asp-action="Index" asp-controller="Admin">Admin</a></div>

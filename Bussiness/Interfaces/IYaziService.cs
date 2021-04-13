@@ -15,6 +15,7 @@ namespace Bussiness.Interfaces
         Task<List<Yazi>> GetYazi();
         Task<List<Kategori>> GetYaziKategoris(int id);
         Task Onaylar(int id);
+        Task Onaylama(int id);
 
     }
 }

@@ -98,5 +98,13 @@ namespace Data.Concrete.EfCore.Repositories
             onaysiz.BeklemeDurumu = OnayDurumlari.Onaylandı.ToString();
             await context.SaveChangesAsync();
         }
+
+        public async Task Onaylama(int id)
+        {
+            using BlogContext context = new BlogContext();
+            var onaysiz = context.Yazis.Where(İ => İ.Id == id).FirstOrDefault();
+            onaysiz.BeklemeDurumu = OnayDurumlari.Onaylanmadi.ToString();
+            await context.SaveChangesAsync();
+        }
     }
 }
