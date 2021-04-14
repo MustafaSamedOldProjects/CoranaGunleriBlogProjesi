@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Bussiness.Interfaces;
+using DTOs.Concrete.AppUserDtoS;
 using DTOs.Concrete.YaziDtoS;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +14,6 @@ namespace Blog.Controllers
 {
 
     [Authorize(Roles = "Admin")]
-
     public class AdminController : Controller
     {
         //1: KULLANICIARA ROLLER ATAYABİLECEK.
@@ -37,6 +37,7 @@ namespace Blog.Controllers
         }
         public IActionResult RolAta()
         {
+
             /*
              1: Kullanıcılar listelenecek. Ve Rol ataması yapılabilecek bir drop down menuden.
              */

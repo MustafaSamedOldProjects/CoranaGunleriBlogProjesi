@@ -70,9 +70,12 @@ namespace Data.Concrete.EfCore.Repositories
             }).Where(x => x.y.Id== id).Select(i => new AppUser
             {
                 UserName = i.u.UserName,
-                Id = i.u.Id
+                Id = i.u.Id,
+                
             }).ToListAsync();
         }
+
+        
 
         public async Task<List<AppUser>> GetValidators()
         {

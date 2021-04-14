@@ -13,7 +13,10 @@ namespace Data.Concrete.EfCore.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-NLFNOIV\SQLEXPRESS; Database=myDataBase; User Id=mustafa;Password=78235;");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-NLFNOIV\SQLEXPRESS; Database=myDataBase; User Id=mustafa;Password=78235;", builder =>
+            {
+                builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+            });
             base.OnConfiguring(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder builder)
