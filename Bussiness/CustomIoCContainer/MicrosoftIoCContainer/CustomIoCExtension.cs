@@ -47,6 +47,9 @@ namespace Bussiness.CustomIoCContainer.MicrosoftIoCContainer
 
             services.AddScoped<IAppRoleDal, EfAppRoleRepository>();
             services.AddScoped<IAppRoleService, AppRoleManager>();
+
+            services.AddScoped<IApplicationUserRoleDal, EfApplicationUserRoleRepository>();
+            services.AddScoped<IApplicationUserRoleService, ApplicationUserRoleManager>();
             #endregion
             #region valid
             services.AddTransient<IValidator<YaziCreateDto>,YaziCreateValidator >();

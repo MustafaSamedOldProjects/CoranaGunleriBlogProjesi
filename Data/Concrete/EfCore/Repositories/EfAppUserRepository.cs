@@ -1,5 +1,6 @@
 ﻿using Data.Concrete.EfCore.Context;
 using Data.Interfaces;
+using DTOs.Concrete.AppUserDtoS;
 using Entities.Concrete;
 using Entities.StringInfos;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Data.Concrete.EfCore.Repositories
 {
-    public class EfAppUserRepository :IAppUserDal
+    public class EfAppUserRepository : EfGenericRepository<AppUser>, IAppUserDal
     {
         public async Task<List<AppUser>> GetAdmins()
         {
@@ -27,6 +28,18 @@ namespace Data.Concrete.EfCore.Repositories
                 UserName = i.ttr.u.UserName,
                 Id = i.ttr.u.Id
             }).ToListAsync();
+        }
+
+        public async Task<List<AppUser>> GetAllUsers()
+        {
+            using BlogContext context = new BlogContext();
+            return await context.AppUsers.Select(i => new AppUser()
+            {
+                Id = i.Id,
+                UserName = i.UserName
+            }).ToListAsync() ;
+
+
         }
 
         public async Task<List<AppUser>> GetMembers()
@@ -75,7 +88,66 @@ namespace Data.Concrete.EfCore.Repositories
             }).ToListAsync();
         }
 
-        
+        //public async Task<List<AppUser>> GetUserWithRole()
+        //{
+        //    BlogContext context = new BlogContext();
+
+        //    return await context.AppUsers.Include(i => i.).ThenInclude(i=> i.).ToListAsync();
+        //    //    .Join(context.UserRoles, u => u.Id, ur => ur.UserId, (ıı, ur) => new
+        //    //{
+        //    //    ıı,
+        //    //    ur
+        //    //}).Join(context.Roles, ttr => ttr.ur.RoleId, r => r.Id, (ttr, r) => new
+        //    //{
+        //    //    ttr,
+        //    //    r
+        //    //}).Where(i => i.ttr.ıı.Id == i.r.Id).Select(i => new TempDto()
+        //    //{
+        //    //    appUser = i.ttr.ıı,
+
+        //    //}).ToListAsync() ;
+
+        //}
+
+        //public async Task<List<GetAllUsersDtoHelper>> GetUserWithRole()
+        //{
+        //    using BlogContext context = new BlogContext();
+
+
+        //    //var appuser =  await context.Users.Join(context.UserRoles, u => u.Id, ur => ur.UserId, (u, ur) => new
+        //    //{
+        //    //    u,
+        //    //    ur
+        //    //}).Join(context.Roles, ttr => ttr.ur.RoleId, r => r.Id, (ttr, r) => new
+        //    //{
+        //    //    ttr,
+        //    //    r
+        //    //}).Where(x => x.ttr.ur.RoleId == x.r.Id).Select(i => new AppUser
+        //    //{
+        //    //    Id = i.ttr.u.Id,
+        //    //    Email = i.ttr.u.Email,
+        //    //    Tags = i.ttr.u.Tags,
+        //    //    UserName = i.ttr.u.UserName
+
+
+
+        //    //}).ToListAsync();
+
+        //    //var approle = await context.AppRoles.Select(i=> new AppRole() { 
+        //    //Id =i.Id,
+        //    //Name =i.Name
+        //    //}).ToListAsync();
+
+        //    //List<GetAllUsersDtoHelper> GetAllUsersDtoHelper = new List<GetAllUsersDtoHelper>();
+
+        //    //foreach (var item in appuser)
+        //    //{
+        //    //    GetAllUsersDtoHelper.Add(new GetAllUsersDtoHelper() { 
+        //    //    appUsers = item
+        //    //    });
+        //    //}
+        //    //return 0;
+        //}
 
         public async Task<List<AppUser>> GetValidators()
         {
@@ -108,5 +180,7 @@ namespace Data.Concrete.EfCore.Repositories
                 Id = i.ttr.u.Id
             }).ToListAsync();
         }
+
+       
     }
 }

@@ -13,7 +13,7 @@ namespace Data.Concrete.EfCore.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-NLFNOIV\SQLEXPRESS; Database=myDataBase; User Id=mustafa;Password=78235;", builder =>
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-NLFNOIV\SQLEXPRESS; Database=myDataBase2; User Id=mustafa;Password=78235;", builder =>
             {
                 builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
             });
@@ -30,6 +30,7 @@ namespace Data.Concrete.EfCore.Context
             builder.ApplyConfiguration(new YaziTagMap());
             builder.ApplyConfiguration(new YaziYorumMap());
             builder.ApplyConfiguration(new YorumMap());
+            
             base.OnModelCreating(builder);
         }
 
@@ -42,5 +43,7 @@ namespace Data.Concrete.EfCore.Context
         public DbSet<YaziTag> YaziTags { get; set; }
         public DbSet<YaziYorum> YaziYorums { get; set; }
         public DbSet<Yorum> Yorums { get; set; }
+        public DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
+        
     }
 }

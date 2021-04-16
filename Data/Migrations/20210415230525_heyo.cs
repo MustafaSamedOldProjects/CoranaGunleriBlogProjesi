@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class init : Migration
+    public partial class heyo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,18 +55,11 @@ namespace Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     KategoriIsmi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ParentKategoriId = table.Column<int>(type: "int", nullable: true),
-                    KategoriId = table.Column<int>(type: "int", nullable: true)
+                    ParentKategoriId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Kategoris", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Kategoris_Kategoris_KategoriId",
-                        column: x => x.KategoriId,
-                        principalTable: "Kategoris",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Kategoris_Kategoris_ParentKategoriId",
                         column: x => x.ParentKategoriId,
@@ -141,7 +134,8 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -206,6 +200,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Baslik = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GorunurResmi = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     BeklemeDurumu = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -360,11 +355,6 @@ namespace Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Kategoris_KategoriId",
-                table: "Kategoris",
-                column: "KategoriId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Kategoris_ParentKategoriId",

@@ -5,11 +5,8 @@ using System.Text;
 
 namespace DTOs.Concrete.AppUserDtoS
 {
-    public class GetAllUsersDto
+    public class GetAllUsersDtoHelper
     {
-
-        public List<AppUser> appUserss { get; set; }
-        public List<AppRole> appRoless { get; set; }
         public AppUser appUsers { get; set; }
         public AppRole appRoles { get; set; }
     }

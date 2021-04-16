@@ -6,8 +6,9 @@ using System.Text;
 
 namespace Entities.Concrete
 {
-    public class AppRole :IdentityRole<int>, ITablo
+    public class ApplicationUserRole : IdentityUserRole<int>, ITablo
     {
-        //public ICollection<ApplicationUserRole> UserRoles { get; set; }
+        public override int UserId { get; set; }
+        public override int RoleId { get; set; }
     }
 }

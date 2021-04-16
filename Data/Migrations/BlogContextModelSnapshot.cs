@@ -340,11 +340,17 @@ namespace Data.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<int>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -364,6 +370,18 @@ namespace Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.ApplicationUserRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<int>");
+
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasDiscriminator().HasValue("ApplicationUserRole");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Kategori", b =>
@@ -523,9 +541,18 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Entities.Concrete.ApplicationUserRole", b =>
+                {
+                    b.HasOne("Entities.Concrete.AppUser", null)
+                        .WithMany("UserRoles")
+                        .HasForeignKey("AppUserId");
+                });
+
             modelBuilder.Entity("Entities.Concrete.AppUser", b =>
                 {
                     b.Navigation("Tags");
+
+                    b.Navigation("UserRoles");
 
                     b.Navigation("Yazis");
 

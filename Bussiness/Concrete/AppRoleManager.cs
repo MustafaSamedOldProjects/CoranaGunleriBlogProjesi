@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Bussiness.Concrete
 {
-    public class AppRoleManager :  IAppRoleService
+    public class AppRoleManager : GenericManager<AppRole>, IAppRoleService
     {
         private readonly IAppRoleDal _appRoleDal;
 
-        public AppRoleManager( IAppRoleDal appRoleDal)
+        public AppRoleManager( IAppRoleDal appRoleDal, IGenericDal<AppRole> genericDAL) : base(genericDAL)
         {
             _appRoleDal = appRoleDal;
         }
@@ -29,6 +29,11 @@ namespace Bussiness.Concrete
         public async Task<AppRole> GetModeratorRole()
         {
             return await _appRoleDal.GetModeratorRole();
+        }
+
+        public Task<AppRole> GetRoleById(int id)
+        {
+            return _appRoleDal.GetRoleById(id);
         }
 
         public async Task<AppRole> GetValidatorRole()

@@ -1,5 +1,6 @@
 ﻿using Bussiness.Interfaces;
 using Data.Interfaces;
+using DTOs.Concrete.AppUserDtoS;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -8,16 +9,21 @@ using System.Threading.Tasks;
 
 namespace Bussiness.Concrete
 {
-    public class AppUserManager : IAppUserService
+    public class AppUserManager : GenericManager<AppUser>,IAppUserService
     {
         private readonly IAppUserDal _appUserDal;
-        public AppUserManager(IAppUserDal appUserDal)
+        public AppUserManager(IAppUserDal appUserDal,IGenericDal<AppUser> genericDAL):base(genericDAL)
         {
             _appUserDal = appUserDal;
         }
         public async Task<List<AppUser>> GetAdmins()
         {
             return await _appUserDal.GetAdmins();
+        }
+
+        public async Task<List<AppUser>> GetAllUsers()
+        {
+            return await _appUserDal.GetAllUsers();
         }
 
         public async Task<List<AppUser>> GetMembers()
@@ -37,7 +43,7 @@ namespace Bussiness.Concrete
             return await _appUserDal.GetUsersByYaziId(id);
         }
 
-        
+      
 
         public async Task<List<AppUser>> GetValidators()
         {

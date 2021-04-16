@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20210227183334_init")]
-    partial class init
+    [Migration("20210416015822_deneme")]
+    partial class deneme
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -126,9 +126,6 @@ namespace Data.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("KategoriId")
-                        .HasColumnType("int");
-
                     b.Property<string>("KategoriIsmi")
                         .HasColumnType("nvarchar(max)");
 
@@ -136,8 +133,6 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("KategoriId");
 
                     b.HasIndex("ParentKategoriId");
 
@@ -173,6 +168,9 @@ namespace Data.Migrations
 
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Baslik")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BeklemeDurumu")
                         .HasColumnType("nvarchar(max)");
@@ -344,11 +342,17 @@ namespace Data.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<int>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -370,12 +374,20 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Entities.Concrete.ApplicationUserRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<int>");
+
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasDiscriminator().HasValue("ApplicationUserRole");
+                });
+
             modelBuilder.Entity("Entities.Concrete.Kategori", b =>
                 {
-                    b.HasOne("Entities.Concrete.Kategori", null)
-                        .WithMany("Kategoris")
-                        .HasForeignKey("KategoriId");
-
                     b.HasOne("Entities.Concrete.Kategori", "ParentKategori")
                         .WithMany("SubKategoris")
                         .HasForeignKey("ParentKategoriId")
@@ -531,9 +543,18 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Entities.Concrete.ApplicationUserRole", b =>
+                {
+                    b.HasOne("Entities.Concrete.AppUser", null)
+                        .WithMany("UserRoles")
+                        .HasForeignKey("AppUserId");
+                });
+
             modelBuilder.Entity("Entities.Concrete.AppUser", b =>
                 {
                     b.Navigation("Tags");
+
+                    b.Navigation("UserRoles");
 
                     b.Navigation("Yazis");
 
@@ -542,8 +563,6 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Entities.Concrete.Kategori", b =>
                 {
-                    b.Navigation("Kategoris");
-
                     b.Navigation("SubKategoris");
 
                     b.Navigation("YaziKategoris");

@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Bussiness.Interfaces;
+using DTOs.Concrete;
 using DTOs.Concrete.AppUserDtoS;
 using DTOs.Concrete.YaziDtoS;
 using Entities.Concrete;
+using Entities.StringInfos;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,14 +20,25 @@ namespace Blog.Controllers
     public class AdminController : Controller
     {
         //1: KULLANICIARA ROLLER ATAYABİLECEK.
+        private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly IYaziService _yaziService;
         private readonly ITagService _tagService;
         private readonly IAppUserService _appUserService;
+        private readonly IAppRoleService _appRoleService;
         private readonly IGenericService<Yazi> _genericService;
+        private readonly IGenericService<AppRole> _genericServiceR;
+        private readonly IApplicationUserRoleService _applicationUserRoleService;
 
-        public AdminController(IMapper mapper, IYaziService yaziService, ITagService tagService, IAppUserService appUserService, IGenericService<Yazi> genericService)
-        {
+        public AdminController(IGenericService<AppRole> genericServiceR, IApplicationUserRoleService applicationUserRoleService, IAppRoleService appRoleService, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, IYaziService yaziService, ITagService tagService, IAppUserService appUserService, IGenericService<Yazi> genericService)
+        { 
+
+            _genericServiceR =genericServiceR;
+            _applicationUserRoleService = applicationUserRoleService;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _appRoleService = appRoleService;
             _genericService = genericService;
             _mapper = mapper;
             _yaziService = yaziService;
@@ -35,13 +49,74 @@ namespace Blog.Controllers
         {
             return View();
         }
-        public IActionResult RolAta()
+        public async Task<IActionResult> RolAta()
         {
 
             /*
              1: Kullanıcılar listelenecek. Ve Rol ataması yapılabilecek bir drop down menuden.
              */
-            return View();
+            /*
+             * önce kullanıcıları getir kullanıcılara karşılık gelen rolu getir.
+             * ve rolleri ayrı olarak al ve dto da birleştirip yolla
+             * */
+
+            var roller = _genericServiceR.GetAll().Result;
+
+            var bu =  await _appUserService.GetAllUsers();
+            List<TempDto> tempDtos = new List<TempDto>();
+            var denemes = new List<deneme>();
+            foreach (var item in bu)
+            {
+                denemes.Add(new deneme() { 
+                AppUserId = item.Id,
+                appRoles = roller,
+                roller = _userManager.GetRolesAsync(item).Result.ToList(),
+                UserNama = item.UserName
+            });
+               
+
+            }
+            //foreach (var item in bu)
+            //{
+            //    var role = await _applicationUserRoleService.GetirUserIdyKarşılıkGelenRoleIdYiAsync(item.Id);
+            //    foreach (var item2 in role.ApplicationUserRoles)
+            //    {
+            //        var i = item2;
+            //    }
+            //    var rolename = _genericServiceR.GetById(role.ApplicationUserRoles.FirstOrDefault().RoleId).Result;
+                
+            //    tempDtos.Add(new TempDto() { 
+            //    UId = item.Id,
+            //    UName = item.UserName,
+            //    RId= role.RoleId,
+            //    Urole = rolename.Name,
+            //    appRoles = roller.Result
+            //    });
+            //}
+
+
+            return View(denemes);
+            //return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> RolAta(int uid,  int rid, [FromForm] GetAllUsersDtoHelper gelen)
+        {
+            //1:User bulup rolünü update ediceksin.
+            var roller = new List<string>() {
+            RoleNames.Admin,
+            RoleNames.Member,
+            RoleNames.Moderator,
+            RoleNames.Validator,
+            RoleNames.Writer
+            };
+            var user = _userManager.FindByIdAsync(uid.ToString()).Result;
+            var getuserdefaultRole = await _userManager.GetRolesAsync(user);
+            var getirRole = _appRoleService.GetRoleById(rid);
+            await _userManager.RemoveFromRolesAsync(user, roller);
+            await _userManager.RemoveFromRoleAsync(user, getuserdefaultRole[0]);
+            await _userManager.AddToRoleAsync(user,getirRole.Result.Name);
+            //_genericServiceAppUSER.UpdateUserRole(gelen.appUsers.Id,gelen.appRoles.Id);
+            return RedirectToAction("Temp2");
         }
         public IActionResult Onaylanmayanlar()
         {
@@ -75,6 +150,11 @@ namespace Blog.Controllers
         public IActionResult Temp()
         {
             return RedirectToAction("Onaylanmayanlar");
+
+        }
+        public IActionResult Temp2()
+        {
+            return RedirectToAction("RolAta");
 
         }
     }

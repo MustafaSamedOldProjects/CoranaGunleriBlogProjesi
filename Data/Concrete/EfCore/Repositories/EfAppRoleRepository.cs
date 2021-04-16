@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Data.Concrete.EfCore.Repositories
 {
-    public class EfAppRoleRepository :IAppRoleDal
+    public class EfAppRoleRepository : EfGenericRepository<AppRole>, IAppRoleDal
     {
         public async Task<AppRole> GetAdminRole()
         {
@@ -37,6 +37,15 @@ namespace Data.Concrete.EfCore.Repositories
             return await context.Roles.Where(x => x.Name == RoleNames.Moderator.ToString()).Select(x => new AppRole
             {
                 Name = x.Name
+            }).FirstOrDefaultAsync();
+        }
+
+        public async Task<AppRole> GetRoleById(int id)
+        {
+            BlogContext context = new BlogContext();
+            return await context.AppRoles.Where(i => i.Id == id).Select(i=> new AppRole() { 
+            Id = i.Id,
+            Name = i.Name
             }).FirstOrDefaultAsync();
         }
 
